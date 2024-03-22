@@ -1,9 +1,7 @@
-import React from 'react'
-
 export default function SlidesPage() {
   return (
-    <div>
+    <article>
       <p className="font-bold text-lg">slides page</p>
-    </div>
+    </article>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SlideDetailPage({
+export default function AdminSlideDetailPage({
   params,
 }: {
   params: { slide_group_id: string; slide_id: string }
