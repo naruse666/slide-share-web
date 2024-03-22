@@ -53,6 +53,12 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+      height: {
+        px: '1px',
+      },
+      width: {
+        px: '1px',
+      },
       boxShadow: {
         card: '0px 0px 0px 1px rgba(9,9,11,0.05), 0px 2px 2px 0px rgba(9,9,11,0.08)',
       },
