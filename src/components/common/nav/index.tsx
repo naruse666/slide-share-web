@@ -32,7 +32,7 @@ export default function Nav() {
   const user = true
 
   return (
-    <nav className="fixed z-30 bottom-6 right-1/2 translate-x-1/2 h-13 pl-2.5 bg-white dark:bg-zinc-950 border p-2 rounded-full shadow dark:shadow-black flex sh gap-1.5">
+    <nav className="fixed z-30 bottom-6 right-1/2 translate-x-1/2 h-13 bg-white dark:bg-zinc-950 border p-2 rounded-full shadow dark:shadow-black flex sh gap-1.5">
       {navItems.map((item, index) => (
         <NavItem key={index} href={item.href} Icon={item.Icon} />
       ))}
