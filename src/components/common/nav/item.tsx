@@ -20,8 +20,12 @@ export default function NavItem({
     <Link
       href={'/' + href}
       className={
-        cn('w-8 h-8 flex items-center justify-center rounded-full') +
-        (isActive ? ' bg-blue-500/80 text-white' : ' text-zinc-500')
+        cn(
+          'w-9 h-9 flex items-center justify-center rounded-full transition-all',
+        ) +
+        (isActive
+          ? ' bg-blue-500/80 text-white'
+          : ' text-zinc-500 hover:bg-card/90 hover:text-zinc-400')
       }
     >
       <Icon className="w-5 h-5" />

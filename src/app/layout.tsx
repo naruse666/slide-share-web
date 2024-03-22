@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Noto_Sans_JP } from 'next/font/google'
 
+import Nav from '@/components/common/nav'
 import { ThemeProvider } from '@/components/theme/provider'
 import { cn } from '@/lib/utils'
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           storageKey="theme"
           disableTransitionOnChange
         >
+          <Nav />
           {children}
         </ThemeProvider>
       </body>
