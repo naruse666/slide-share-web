@@ -39,7 +39,7 @@ export default function BreadcrumbNav() {
   })
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="fixed z-20 top-8 left-0 w-full py-2 px-4">
       <BreadcrumbList>
         {navItems.map((item, index) => {
           if ('items' in item) {
@@ -49,7 +49,7 @@ export default function BreadcrumbNav() {
                   key={index}
                   className="flex items-center justify-start gap-2"
                 >
-                  <div className="opacity-70 hover:opacity-100">
+                  <div>
                     <DropDownItem key={index} {...item} />
                   </div>
                   <Separator />
@@ -64,7 +64,7 @@ export default function BreadcrumbNav() {
                   key={index}
                   className="flex items-center justify-start gap-2"
                 >
-                  <div className="opacity-70 hover:opacity-100">
+                  <div>
                     <NormalItem key={index} {...item} />
                   </div>
                   <Separator />
