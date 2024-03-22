@@ -1,5 +1,4 @@
 import BreadcrumbNav from '@/components/common/breadcrumb-nav'
-import Header from '@/components/common/header'
 import Nav from '@/components/common/nav'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
@@ -10,7 +9,6 @@ export default function MainLayout({
 }) {
   return (
     <main className="h-dvh overflow-hidden">
-      <Header />
       <BreadcrumbNav />
       <Nav />
       <ScrollArea className="h-dvh px-4">
