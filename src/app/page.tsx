@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main>
       <ScrollArea className="h-dvh px-4">
-        <span className="pt-16 pb-4 block"></span>
+        <span className="pt-7 pb-4 block"></span>
         <Nav />
         <p className="font-bold text-lg">dashboard page</p>
       </ScrollArea>

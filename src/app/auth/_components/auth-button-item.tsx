@@ -2,6 +2,7 @@
 
 import { ArrowRight, Loader } from 'lucide-react'
 import Image from 'next/image'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 
 export default function AuthButton({
@@ -22,6 +23,7 @@ export default function AuthButton({
   const handleAuthButtonClick = () => {
     setCurrentProvider(provider)
     handleSignIn(provider)
+    signIn(provider, { callbackUrl: '/' })
   }
 
   if (provider === 'github') {

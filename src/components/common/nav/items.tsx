@@ -1,18 +1,32 @@
 'use client'
 
 import type { LucideIcon } from 'lucide-react'
+import { GalleryThumbnails, HomeIcon, MailIcon, Speech } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
-export default function NavItem({
-  href,
-  Icon,
-}: {
-  href: string
-  Icon: LucideIcon
-}) {
+const navItems = [
+  {
+    href: '',
+    Icon: HomeIcon,
+  },
+  {
+    href: 'slides',
+    Icon: GalleryThumbnails,
+  },
+  {
+    href: 'speakers',
+    Icon: Speech,
+  },
+  {
+    href: 'contacts',
+    Icon: MailIcon,
+  },
+]
+
+function NavItem({ href, Icon }: { href: string; Icon: LucideIcon }) {
   const pathname = usePathname()
   const isActive = pathname.split('/')[1] === href
 
@@ -30,5 +44,15 @@ export default function NavItem({
     >
       <Icon className="w-5 h-5" />
     </Link>
+  )
+}
+
+export default function NavItems() {
+  return (
+    <nav className="flex">
+      {navItems.map((item, index) => (
+        <NavItem key={index} href={item.href} Icon={item.Icon} />
+      ))}
+    </nav>
   )
 }

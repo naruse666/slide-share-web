@@ -1,15 +1,9 @@
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
-import ButtonWrapper from './components/button-wrapper'
+import ButtonWrapper from './_components/button-wrapper'
 
 export default function AuthPage() {
   return (
