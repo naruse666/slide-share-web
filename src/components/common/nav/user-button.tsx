@@ -27,10 +27,10 @@ export default async function UserButton() {
               <AvatarFallback>{user.name![0]}</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
-          <PopoverContent className="mb-3 px-1 py-1.5 flex flex-col gap-1">
+          <PopoverContent className="mb-3  p-1.5 flex flex-col gap-1">
             <p className="px-2 text-foreground">{user.name}</p>
             <p className="px-2 text-xs">{user.email}</p>
-            <div className="mt-2 px-2">
+            <div className="mt-2">
               <Separator />
             </div>
             <SignOutButton />
