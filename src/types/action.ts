@@ -1,5 +1,3 @@
-import type { User } from './user'
-
 export type ActionsResult =
   | {
       isSuccess: true

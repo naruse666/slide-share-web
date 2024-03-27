@@ -1,5 +1,6 @@
 'use server'
 
+import jwt from 'jsonwebtoken'
 import type { z } from 'zod'
 
 import { setSpeakerInfoSchema } from '@/schemas/user'
@@ -31,6 +32,16 @@ export const setSpeakerInfo = async (
       isSuccess: false,
       error: {
         message: 'ログインしてください',
+      },
+    }
+  }
+
+  const decoded = jwt.verify(session.accessToken, process.env.AUTH_SECRET!)
+  if (typeof decoded === 'object' && decoded.id !== user.id) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'IDが一致しません',
       },
     }
   }
@@ -89,6 +100,6 @@ export const setSpeakerInfo = async (
 
   return {
     isSuccess: true,
-    message: '登録に成功しました',
+    message: '発表者情報を設定しました',
   }
 }

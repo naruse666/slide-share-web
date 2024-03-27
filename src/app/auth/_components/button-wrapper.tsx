@@ -33,8 +33,6 @@ export default function ButtonWrapper() {
   const [pending, setPending] = useState(false)
 
   const handleSignIn = (provider: string) => {
-    console.log('provider', provider)
-    // signIn(provider, { callbackUrl: '/' })
     setPending(true)
   }
 

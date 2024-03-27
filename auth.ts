@@ -26,7 +26,7 @@ export const {
       })
       const accessToken = jwt.sign(
         {
-          id: token.sub || randomUUID(),
+          id: user.id,
           role: user.role || 'user',
         },
         process.env.AUTH_SECRET!,
@@ -48,7 +48,6 @@ export const {
       }
       session.accessToken = accessToken
 
-      console.log('session', session)
       return session
     },
     async jwt({ token }) {

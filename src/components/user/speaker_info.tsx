@@ -61,10 +61,9 @@ export default function SpeakerInfoDialog({
           setError(result.error.message)
           return
         }
+        setIsOpen(false)
+        toast.success(result.message)
       })
-
-      setIsOpen(false)
-      toast.success('発表者情報を設定しました')
     }
 
     return (
