@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/theme/provider'
 import { Toaster } from '@/components/ui/sonner'
 import SpeakerInfoDialog from '@/components/user/speaker_info'
 import { cn } from '@/lib/utils'
+import type { User } from '@/types/user'
 
 import { auth } from '../../auth'
 
@@ -41,7 +42,7 @@ export default async function RootLayout({
         >
           <Toaster />
           <Header />
-          <SpeakerInfoDialog role={user?.role} speaker_id={user?.speaker_id} />
+          <SpeakerInfoDialog user={user as User} />
           {children}
         </ThemeProvider>
       </body>

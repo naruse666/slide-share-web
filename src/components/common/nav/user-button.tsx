@@ -26,13 +26,13 @@ export default async function UserButton() {
           <PopoverTrigger className="">
             <Avatar className="w-9 h-9 ml-1">
               <AvatarImage src={user.image!} />
-              <AvatarFallback>{user.name![0]}</AvatarFallback>
+              <AvatarFallback>{user.display_name![0]}</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
           <PopoverContent className="mb-3 py-2 px-1.5 flex flex-col gap-1">
             <div className="px-2">
               <div className="flex justify-between">
-                <p className="text-foreground">{user.name}</p>
+                <p className="text-foreground">{user.display_name}</p>
                 {user.role != 'user' && (
                   <Badge>{user.role == 'admin' ? '管理者' : '発表者'}</Badge>
                 )}

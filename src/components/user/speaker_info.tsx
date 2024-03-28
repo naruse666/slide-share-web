@@ -6,20 +6,20 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import type * as z from 'zod'
 
-import { setSpeakerInfo } from '@/action/user'
+import { getSpeakerList, setSpeakerInfo } from '@/action/speaker'
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { setSpeakerInfoSchema } from '@/schemas/user'
+import type { User } from '@/types/user'
 
 import { FormError } from '../common/form/form-error'
+import TypeLabel from '../common/form/type-label'
 import { Button } from '../ui/button'
 import {
   Form,
@@ -31,13 +31,7 @@ import {
 } from '../ui/form'
 import { Input } from '../ui/input'
 
-export default function SpeakerInfoDialog({
-  role,
-  speaker_id,
-}: {
-  role?: string
-  speaker_id?: string
-}) {
+export default function SpeakerInfoDialog({ user }: { user: User | null }) {
   const [isOpen, setIsOpen] = useState(true)
   const [error, setError] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
@@ -45,17 +39,33 @@ export default function SpeakerInfoDialog({
   const form = useForm<z.infer<typeof setSpeakerInfoSchema>>({
     resolver: zodResolver(setSpeakerInfoSchema),
     defaultValues: {
-      speaker_id: '',
-      school: '',
-      course: '',
+      name: user?.name,
+      display_name: user?.display_name,
+      speaker_id: user?.speaker_id,
+      school: user?.school,
+      course: user?.course,
     },
   })
 
-  if (!role) return null
-  if (role != 'user' && !speaker_id) {
+  if (!user || user.role === 'user') return null
+  if (!user.speaker_id) {
     const onSubmit = (values: z.infer<typeof setSpeakerInfoSchema>) => {
       setError('')
       startTransition(async () => {
+        const speakerList = await getSpeakerList()
+        if (!speakerList.isSuccess) {
+          setError(speakerList.error.message)
+          return
+        }
+
+        const isExist = speakerList.data.some(
+          (speaker) => speaker.id === values.speaker_id,
+        )
+        if (isExist) {
+          setError('すでに存在する発表者IDです')
+          return
+        }
+
         const result = await setSpeakerInfo(values)
         if (!result.isSuccess) {
           setError(result.error.message)
@@ -80,12 +90,56 @@ export default function SpeakerInfoDialog({
                 >
                   <FormField
                     control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          名前 <TypeLabel type="必須" />
+                        </FormLabel>
+                        <FormDescription className="text-xs">
+                          一般に公開されません。
+                        </FormDescription>
+                        <FormControl>
+                          <Input placeholder="name" {...field} />
+                        </FormControl>
+                        <p className="text-red-500 text-xs">
+                          {form.formState.errors.speaker_id?.message}
+                        </p>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="display_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          表示名
+                          <TypeLabel type="必須" />
+                        </FormLabel>
+                        <FormDescription className="text-xs">
+                          一般に公開されます。
+                        </FormDescription>
+                        <FormControl>
+                          <Input placeholder="name" {...field} />
+                        </FormControl>
+                        <p className="text-red-500 text-xs">
+                          {form.formState.errors.speaker_id?.message}
+                        </p>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
                     name="speaker_id"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>発表者ID</FormLabel>
+                        <FormLabel>
+                          発表者ID
+                          <TypeLabel type="必須" />
+                        </FormLabel>
                         <FormDescription className="text-xs">
-                          発表者IDは必須です。一般に公開されます。半角英数のみ有効です。
+                          一般に公開されます。半角英数のみ有効です。
                         </FormDescription>
                         <FormControl>
                           <Input placeholder="name" {...field} />
@@ -101,7 +155,10 @@ export default function SpeakerInfoDialog({
                     name="school"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>学校</FormLabel>
+                        <FormLabel>
+                          学校
+                          <TypeLabel type="任意" />
+                        </FormLabel>
                         <FormDescription className="text-xs">
                           発表者IDは任意です。一般に公開されます。
                         </FormDescription>
@@ -116,9 +173,12 @@ export default function SpeakerInfoDialog({
                     name="course"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>専攻</FormLabel>
+                        <FormLabel>
+                          専攻
+                          <TypeLabel type="任意" />
+                        </FormLabel>
                         <FormDescription className="text-xs">
-                          専攻は任意です。一般に公開されます。
+                          一般に公開されます。
                         </FormDescription>
                         <FormControl>
                           <Input placeholder="IT科" {...field} />

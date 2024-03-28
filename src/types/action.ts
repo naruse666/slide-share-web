@@ -1,3 +1,5 @@
+import type { Speaker } from './speaker'
+
 export type ActionsResult =
   | {
       isSuccess: true
@@ -9,3 +11,7 @@ export type ActionsResult =
         message: string
       }
     }
+
+export type GetSpeakerListActionResult = ActionsResult & {
+  data: Speaker[]
+}

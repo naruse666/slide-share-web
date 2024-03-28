@@ -42,6 +42,7 @@ export const {
         image: user.image,
         role: user.role || 'user',
         speaker_id: user.speaker_id,
+        display_name: user.display_name,
         school: user.school,
         course: user.course,
         emailVerified: user.created_at,

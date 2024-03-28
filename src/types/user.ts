@@ -11,9 +11,10 @@ export type User = {
   email: string
   image: string
   role: 'user' | 'speaker' | 'admin'
-  speaker_id: string
-  school: string
-  course: string
+  speaker_id?: string
+  display_name?: string
+  school?: string
+  course?: string
   created_at: Date
   updated_at: Date
 }
