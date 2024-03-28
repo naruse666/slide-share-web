@@ -77,7 +77,7 @@ export default function WeekSlideList() {
       <h3 className="text-foreground mb-4 text-center font-bold">
         「{slideList.title}」
       </h3>
-      <div className="text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+      <div className="text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {slideList.slides.map((slide, index) => (
           <Link
             href={`/slides/${slideList.id}/${slide.id}`}
