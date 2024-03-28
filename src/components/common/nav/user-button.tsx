@@ -21,10 +21,10 @@ export default async function UserButton() {
   const user = session?.user
 
   return (
-    <div className="">
+    <div className="h-8">
       {user ? (
         <Popover>
-          <PopoverTrigger className="">
+          <PopoverTrigger>
             <Avatar className="w-9 h-9 ml-1">
               <AvatarImage src={user.image!} />
               <AvatarFallback>{user.display_name![0]}</AvatarFallback>
