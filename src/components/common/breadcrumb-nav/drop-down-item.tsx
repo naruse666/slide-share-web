@@ -28,8 +28,8 @@ export default function DropDownItem(dropDownItem: BreadcrumbNavItem) {
           <DropdownMenuContent align="start">
             {dropDownItem.items.map((item) => (
               <DropdownMenuItem key={item.url}>
-                <BreadcrumbLink href={item.url} className="w-full">
-                  {item.label}
+                <BreadcrumbLink className="w-full" asChild>
+                  <Link href={item.url}>{item.label}</Link>
                 </BreadcrumbLink>
               </DropdownMenuItem>
             ))}

@@ -21,7 +21,7 @@ export default function BreadcrumbNav() {
     items: [
       {
         label: 'スライド',
-        url: '/slides',
+        url: '/slides?page=1',
       },
       {
         label: '発表者',

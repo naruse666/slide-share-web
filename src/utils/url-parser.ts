@@ -19,7 +19,7 @@ export const urlParser = (pathname: string): BreadcrumbNavItem[] => {
   // URLパスに基づいてナビゲーション項目を動的に追加
   const pathsMapping = {
     slides: () => {
-      navItems.push(createNavItem('スライド一覧', '/slides'))
+      navItems.push(createNavItem('スライド一覧', '/slides?page=1'))
       if (urlArray[2]) {
         navItems.push(
           createNavItem('スライドグループ', `/slides/${urlArray[2]}`),

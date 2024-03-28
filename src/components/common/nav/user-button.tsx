@@ -9,11 +9,12 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
+import SpeakerInfoDialog from '@/components/user/speaker/speaker_info_dialog'
 import { cn } from '@/lib/utils'
+import type { User } from '@/types/user'
 
 import { auth } from '../../../../auth'
 import SignOutButton from './sign-out-button'
-import UserSettings from './user-settings'
 
 export default async function UserButton() {
   const session = await auth()
@@ -54,7 +55,7 @@ export default async function UserButton() {
             <div className="mt-2">
               <Separator />
             </div>
-            <UserSettings />
+            <SpeakerInfoDialog user={user as User} />
             <div className="">
               <Separator />
             </div>

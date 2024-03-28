@@ -24,7 +24,7 @@ export default function UserSettings() {
       <AlertDialogTrigger className="w-full">
         <button className="text-sm w-full flex gap-1 justify-start items-center my-0.5 p-1.5 rounded transition-colors hover:text-foreground hover:bg-black/10 hover:dark:bg-white/10">
           <UserRound className="w-5 h-5" />
-          ユーザー情報を変更
+          発表者情報を変更
         </button>
       </AlertDialogTrigger>
       <AlertDialogContent>

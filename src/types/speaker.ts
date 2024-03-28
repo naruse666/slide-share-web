@@ -1,5 +1,6 @@
 export type Speaker = {
   id: string
+  speaker_id: string
   display_name: string
   image: string
   school: string

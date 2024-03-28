@@ -6,7 +6,7 @@ import { Inter, Noto_Sans_JP } from 'next/font/google'
 import Header from '@/components/common/header'
 import { ThemeProvider } from '@/components/theme/provider'
 import { Toaster } from '@/components/ui/sonner'
-import SpeakerInfoDialog from '@/components/user/speaker_info'
+import FirstSpeakerInfoDialog from '@/components/user/speaker/first_speaker_info_dialog'
 import { cn } from '@/lib/utils'
 import type { User } from '@/types/user'
 
@@ -42,7 +42,7 @@ export default async function RootLayout({
         >
           <Toaster />
           <Header />
-          <SpeakerInfoDialog user={user as User} />
+          <FirstSpeakerInfoDialog user={user as User} />
           {children}
         </ThemeProvider>
       </body>

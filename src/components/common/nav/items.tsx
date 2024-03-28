@@ -13,7 +13,7 @@ const navItems = [
     Icon: HomeIcon,
   },
   {
-    href: 'slides',
+    href: 'slides?page=1',
     Icon: GalleryThumbnails,
   },
   {
@@ -28,7 +28,7 @@ const navItems = [
 
 function NavItem({ href, Icon }: { href: string; Icon: LucideIcon }) {
   const pathname = usePathname()
-  const isActive = pathname.split('/')[1] === href
+  const isActive = pathname.split(/[/?]/)[1] === href.split(/[/?]/)[0]
 
   return (
     <Link
