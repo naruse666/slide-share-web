@@ -1,5 +1,12 @@
 const infoItems = [
-  { title: '活動日', content: '毎週木曜 20:00 〜 21:00' },
+  {
+    title: '活動日',
+    content: (
+      <p>
+        <span>毎週木曜</span> 20:00 〜 21:00
+      </p>
+    ),
+  },
   {
     title: '参加校',
     content: (
