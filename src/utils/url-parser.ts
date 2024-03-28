@@ -21,23 +21,18 @@ export const urlParser = (pathname: string): BreadcrumbNavItem[] => {
     slides: () => {
       navItems.push(createNavItem('スライド一覧', '/slides?page=1'))
       if (urlArray[2]) {
-        navItems.push(
-          createNavItem('スライドグループ', `/slides/${urlArray[2]}`),
-        )
+        navItems.push(createNavItem(urlArray[2], `/slides/${urlArray[2]}`))
         if (urlArray[3]) {
           navItems.push(
-            createNavItem(
-              'スライド詳細',
-              `/slides/${urlArray[2]}/${urlArray[3]}`,
-            ),
+            createNavItem(urlArray[3], `/slides/${urlArray[2]}/${urlArray[3]}`),
           )
         }
       }
     },
     speakers: () => {
-      navItems.push(createNavItem('発表者', '/speakers'))
+      navItems.push(createNavItem('発表者一覧', '/speakers'))
       if (urlArray[2]) {
-        navItems.push(createNavItem('発表者詳細', `/speakers/${urlArray[2]}`))
+        navItems.push(createNavItem(urlArray[2], `/speakers/${urlArray[2]}`))
       }
     },
     contacts: () => navItems.push(createNavItem('お問い合わせ', '/contacts')),

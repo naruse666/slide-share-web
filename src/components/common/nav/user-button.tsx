@@ -21,7 +21,7 @@ export default async function UserButton() {
   const user = session?.user
 
   return (
-    <div>
+    <div className="">
       {user ? (
         <Popover>
           <PopoverTrigger className="">
@@ -56,9 +56,7 @@ export default async function UserButton() {
               <Separator />
             </div>
             <SpeakerInfoDialog user={user as User} />
-            <div className="">
-              <Separator />
-            </div>
+            <Separator />
             <SignOutButton />
           </PopoverContent>
         </Popover>
