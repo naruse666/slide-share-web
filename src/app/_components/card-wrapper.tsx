@@ -25,7 +25,7 @@ export default function CardWrapper({
             {title}
           </h2>
         ) : (
-          <div className="flex justify-between text-foreground items-center mb-5 text-sm">
+          <div className="flex flex-wrap gap-2 justify-between text-foreground items-center mb-5 text-sm">
             <h2 className="font-semibold tracking-wider">{title}</h2>
             <Link
               href={link.href}

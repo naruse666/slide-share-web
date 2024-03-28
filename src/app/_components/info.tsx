@@ -32,7 +32,9 @@ export default function Info() {
           key={index}
           className="flex text-center text-foreground text-sm tracking-wide"
         >
-          <div className="w-full p-3 bg-border rounded-s-md">{item.title}</div>
+          <div className="w-full p-3 bg-border rounded-s-md grid place-items-center">
+            {item.title}
+          </div>
           <div className="w-full p-3 border rounded-e-md">{item.content}</div>
         </div>
       ))}
