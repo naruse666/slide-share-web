@@ -1,3 +1,4 @@
+import type { Slide, SlideGroup } from './slide'
 import type { Speaker } from './speaker'
 
 export type ActionsResult =
@@ -14,4 +15,12 @@ export type ActionsResult =
 
 export type GetSpeakerListActionResult = ActionsResult & {
   data: Speaker[]
+}
+
+export type GetSlideGroupActionResult = ActionsResult & {
+  data: SlideGroup
+}
+
+export type GetSlideActionResult = ActionsResult & {
+  data: Slide
 }

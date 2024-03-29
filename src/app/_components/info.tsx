@@ -10,7 +10,7 @@ const infoItems = [
   {
     title: '参加校',
     content: (
-      <p>
+      <div>
         <a
           href="https://www.tech.ac.jp/"
           target="_blank"
@@ -26,7 +26,7 @@ const infoItems = [
         >
           福岡校
         </a>
-      </p>
+      </div>
     ),
   },
 ]

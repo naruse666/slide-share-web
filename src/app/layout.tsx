@@ -43,7 +43,7 @@ export default async function RootLayout({
           <Toaster />
           <Header />
           <FirstSpeakerInfoDialog user={user as User} />
-          {children}
+          <main>{children}</main>
         </ThemeProvider>
       </body>
     </html>

@@ -1,14 +1,14 @@
 import Nav from '@/components/common/nav'
-import WeekSlideList from '@/components/slide/week_slide_list'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { SpeakerList } from '@/components/user/speaker/speaker_list'
 
 import CardWrapper from './_components/card-wrapper'
 import Info from './_components/info'
+import NewestSlideGroup from './_components/newest_slide_group'
+import { SpeakerList } from './(main)/speakers/_components/speaker_list'
 
 export default async function Home() {
   return (
-    <main>
+    <article>
       <Nav />
       <ScrollArea className="h-dvh px-4">
         <div className="flex flex-col gap-3 pt-12 pb-24 px-1">
@@ -32,10 +32,10 @@ export default async function Home() {
               text: 'すべてのLTを見る',
             }}
           >
-            <WeekSlideList />
+            <NewestSlideGroup />
           </CardWrapper>
         </div>
       </ScrollArea>
-    </main>
+    </article>
   )
 }

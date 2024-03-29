@@ -12,7 +12,7 @@ export default function MainLayout({
       <BreadcrumbNav />
       <Nav />
       <ScrollArea className="h-dvh px-4">
-        <span className="pt-16 pb-4 block"></span>
+        <span className="pt-16 pb-5 block"></span>
         {children}
       </ScrollArea>
     </main>

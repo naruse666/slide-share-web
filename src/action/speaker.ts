@@ -11,6 +11,7 @@ import { auth, unstable_update } from '../../auth'
 export const getSpeakerList = async (): Promise<GetSpeakerListActionResult> => {
   const speakerList = await fetch(`${process.env.API_URL}/speaker`, {
     method: 'GET',
+    cache: 'force-cache',
   })
     .then((res) => {
       if (!res.ok) {
