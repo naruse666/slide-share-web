@@ -1,6 +1,7 @@
 export type Slide = {
   id: string
   title: string
+  is_publish: boolean
   drive_pdf_url: string
   storage_thumbnail_url: string
   google_slide_share_url: string

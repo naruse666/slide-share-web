@@ -1,13 +1,21 @@
 'use server'
 
+import jwt from 'jsonwebtoken'
+import type { ActionResult } from 'next/dist/server/app-render/types'
+import type { z } from 'zod'
+
+import { createSlideGroupSchema } from '@/schemas/slide'
 import type {
   GetSlideActionResult,
   GetSlideGroupActionResult,
+  GetSlideGroupsActionResult,
 } from '@/types/action'
+
+import { auth } from '../../auth'
 
 export const getNewestSlideGroup =
   async (): Promise<GetSlideGroupActionResult> => {
-    const slideGroup = await fetch(`${process.env.API_URL}/slides`, {
+    const slideGroup = await fetch(`${process.env.API_URL}/slides/newest`, {
       method: 'GET',
       cache: 'force-cache',
     })
@@ -59,6 +67,105 @@ export const getSlideGroup = async (
     isSuccess: true,
     message: 'スライドグループを取得しました',
     data: slideGroup,
+  }
+}
+
+export const getSlideGroups = async (): Promise<GetSlideGroupsActionResult> => {
+  const slideGroups = await fetch(`${process.env.API_URL}/slides`, {
+    method: 'GET',
+    cache: 'no-cache',
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return null
+      }
+      return res.json()
+    })
+    .catch((error) => {
+      return {
+        isSuccess: false,
+        error: {
+          message: error.message,
+        },
+      }
+    })
+
+  return {
+    isSuccess: true,
+    message: 'スライドグループを取得しました',
+    data: slideGroups,
+  }
+}
+
+export const createSlideGroup = async (
+  values: z.infer<typeof createSlideGroupSchema>,
+): Promise<ActionResult> => {
+  const validatedFields = createSlideGroupSchema.safeParse(values)
+  const session = await auth()
+  const user = session?.user
+
+  if (!user) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'ログインしてください',
+      },
+    }
+  }
+
+  const decoded = jwt.verify(session.accessToken, process.env.AUTH_SECRET!)
+  if (typeof decoded === 'object' && decoded.id !== user.id) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'IDが一致しません',
+      },
+    }
+  }
+
+  if (!validatedFields.success) {
+    return {
+      isSuccess: false,
+      error: {
+        message: validatedFields.error.message,
+      },
+    }
+  }
+
+  await fetch(`${process.env.API_URL}/slides/${values.id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session.accessToken}`,
+    },
+    body: JSON.stringify(values),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return {
+          isSuccess: false,
+          error: {
+            message: 'スライドグループの作成に失敗しました',
+          },
+        }
+      }
+      return {
+        isSuccess: true,
+        message: 'スライドグループを作成しました',
+      }
+    })
+    .catch((error) => {
+      return {
+        isSuccess: false,
+        error: {
+          message: error.message,
+        },
+      }
+    })
+
+  return {
+    isSuccess: true,
+    message: 'スライドグループを作成しました',
   }
 }
 

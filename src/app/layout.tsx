@@ -2,10 +2,10 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { Inter, Noto_Sans_JP } from 'next/font/google'
+import { Toaster } from 'sonner'
 
 import Header from '@/components/common/header'
 import { ThemeProvider } from '@/components/theme/provider'
-import { Toaster } from '@/components/ui/sonner'
 import FirstSpeakerInfoDialog from '@/components/user/speaker/first_speaker_info_dialog'
 import { cn } from '@/lib/utils'
 import type { User } from '@/types/user'

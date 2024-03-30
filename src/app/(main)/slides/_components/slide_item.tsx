@@ -3,8 +3,11 @@ import Link from 'next/link'
 
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { Slide } from '@/types/slide'
+
+import { auth } from '../../../../../auth'
 
 export const SlideSkeleton = () => (
   <div className="bg-border/50 flex flex-col gap-2.5 rounded-md">
@@ -19,18 +22,38 @@ export const SlideSkeleton = () => (
   </div>
 )
 
-export default function SlideItem({
+export default async function SlideItem({
   slide,
   group_id,
 }: {
   slide: Slide
   group_id: string
 }) {
+  const session = await auth()
+  const user = session?.user
+  if (!slide.is_publish && user?.role !== 'admin') {
+    if (slide.speaker_id !== user?.id) {
+      return null
+    }
+  }
+
   return (
     <Link
       href={`/slides/${group_id}/${slide.id}`}
-      className="flex flex-col flew gap-2.5 transition-all duration-300 bg-border/50 group hover:bg-black/20 hover:dark:bg-white/20 rounded-md"
+      className="flex flex-col relative gap-2.5 transition-all duration-300 bg-border/50 group hover:bg-black/20 hover:dark:bg-white/20 rounded-md"
     >
+      {user?.role === 'admin' && (
+        <Badge
+          variant="outline"
+          className={`border absolute z-30 top-1 right-1 ${
+            slide.is_publish
+              ? 'border-green-400 bg-green-400/50'
+              : 'border-red-400 bg-red-400/50'
+          }`}
+        >
+          {slide.is_publish ? '公開中' : '非公開'}
+        </Badge>
+      )}
       <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-t-md">
         <Image
           src={slide.storage_thumbnail_url}

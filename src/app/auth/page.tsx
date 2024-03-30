@@ -1,11 +1,26 @@
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
+import SignOutButton from '@/components/common/nav/sign-out-button'
 import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
+import { auth } from '../../../auth'
 import ButtonWrapper from './_components/button-wrapper'
 
-export default function AuthPage() {
+export default async function AuthPage() {
+  const session = await auth()
+  const user = session?.user
+
+  if (user) {
+    return (
+      <main className="h-dvh">
+        <article className="pt-10 h-full flex items-center justify-center">
+          <SignOutButton />
+        </article>
+      </main>
+    )
+  }
+
   return (
     <main className="h-dvh">
       <article className="pt-10 h-full flex items-center">

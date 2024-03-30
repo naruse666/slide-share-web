@@ -42,20 +42,28 @@ export default function SlidePagination() {
   return (
     <Pagination>
       <PaginationContent>
-        {searchPage !== '1' && (
+        {searchPage !== '1' ? (
           <PaginationItem>
             <PaginationPrevious
               href={`slides/?page=${Number(searchPage) - 1}`}
+              className="w-20"
             />
           </PaginationItem>
+        ) : (
+          <div className="w-20"></div>
         )}
         {items.map((item, index) => (
           <Item key={index} page={item.page} searchPage={searchPage || ''} />
         ))}
-        {searchPage !== items[items.length - 1].page && (
+        {searchPage !== items[items.length - 1].page ? (
           <PaginationItem>
-            <PaginationNext href={`slides/?page=${Number(searchPage) + 1}`} />
+            <PaginationNext
+              href={`slides/?page=${Number(searchPage) + 1}`}
+              className="w-20"
+            />
           </PaginationItem>
+        ) : (
+          <div className="w-20"></div>
         )}
       </PaginationContent>
     </Pagination>

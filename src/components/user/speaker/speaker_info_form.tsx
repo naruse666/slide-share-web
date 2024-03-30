@@ -90,7 +90,7 @@ export default function SpeakerInfoForm({
                 一般に公開されません。
               </FormDescription>
               <FormControl>
-                <Input placeholder="name" {...field} />
+                <Input placeholder="名前" {...field} />
               </FormControl>
               <p className="text-red-500 text-xs">
                 {form.formState.errors.speaker_id?.message}
@@ -111,7 +111,7 @@ export default function SpeakerInfoForm({
                 一般に公開されます。
               </FormDescription>
               <FormControl>
-                <Input placeholder="name" {...field} />
+                <Input placeholder="ニックネーム" {...field} />
               </FormControl>
               <p className="text-red-500 text-xs">
                 {form.formState.errors.speaker_id?.message}

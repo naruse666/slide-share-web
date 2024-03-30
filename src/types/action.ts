@@ -21,6 +21,10 @@ export type GetSlideGroupActionResult = ActionsResult & {
   data: SlideGroup
 }
 
+export type GetSlideGroupsActionResult = ActionsResult & {
+  data: string[]
+}
+
 export type GetSlideActionResult = ActionsResult & {
   data: Slide
 }

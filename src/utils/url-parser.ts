@@ -21,10 +21,18 @@ export const urlParser = (pathname: string): BreadcrumbNavItem[] => {
     slides: () => {
       navItems.push(createNavItem('スライド一覧', '/slides?page=1'))
       if (urlArray[2]) {
-        navItems.push(createNavItem(urlArray[2], `/slides/${urlArray[2]}`))
+        navItems.push(
+          createNavItem(
+            urlArray[2] === 'create-group' ? 'グループ作成' : urlArray[2],
+            `/slides/${urlArray[2]}`,
+          ),
+        )
         if (urlArray[3]) {
           navItems.push(
-            createNavItem(urlArray[3], `/slides/${urlArray[2]}/${urlArray[3]}`),
+            createNavItem(
+              urlArray[3] === 'upload' ? 'アップロード' : urlArray[3],
+              `/slides/${urlArray[2]}/${urlArray[3]}`,
+            ),
           )
         }
       }

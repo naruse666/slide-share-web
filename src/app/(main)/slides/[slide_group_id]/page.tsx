@@ -1,18 +1,24 @@
+import { FileUp } from 'lucide-react'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { getSlideGroup } from '@/action/slide'
 import CardWrapper from '@/app/_components/card-wrapper'
+import { buttonVariants } from '@/components/ui/button'
 import { convertToJST } from '@/utils/convert-jwt'
 
-import SlideItem, { SlideSkeleton } from '../_components/slide_item'
+import { auth } from '../../../../../auth'
+import SlideItem from '../_components/slide_item'
+import GroupEdit from './_components/group_edit'
 
 export default async function SlideGroupPage({
   params,
 }: {
   params: { slide_group_id: string }
 }) {
+  const session = await auth()
+  const user = session?.user
   const slideGroup = await getSlideGroup(params.slide_group_id)
-  const skeltonNum = 4
 
   if (!slideGroup.isSuccess || slideGroup.data === null) {
     redirect('/404')
@@ -28,7 +34,7 @@ export default async function SlideGroupPage({
           text: 'すべてのLTを見る',
         }}
       >
-        {slideGroup.data.id ? (
+        {Boolean(slideGroup.data?.slide_list) ? (
           <div className="text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
             {slideGroup.data.slide_list.map((slide, index) => (
               <SlideItem
@@ -39,10 +45,20 @@ export default async function SlideGroupPage({
             ))}
           </div>
         ) : (
-          <div className="text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
-            {Array.from({ length: skeltonNum }).map((_, index) => (
-              <SlideSkeleton key={index} />
-            ))}
+          <div className="flex justify-center items-center py-6">
+            <p className="text-foreground">まだスライドがありません</p>
+          </div>
+        )}
+        {user?.role !== 'user' && (
+          <div className="flex justify-center items-center gap-3 flex-wrap pt-5">
+            {user?.role === 'admin' && <GroupEdit />}
+            <Link
+              className={`${buttonVariants()} flex gap-1.5`}
+              href={`/slides/${params.slide_group_id}/upload`}
+            >
+              スライドをアップロードする
+              <FileUp />
+            </Link>
           </div>
         )}
       </CardWrapper>
