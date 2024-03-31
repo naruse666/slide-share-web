@@ -44,7 +44,7 @@ export const urlParser = (pathname: string): BreadcrumbNavItem[] => {
       }
     },
     contacts: () => navItems.push(createNavItem('お問い合わせ', '/contacts')),
-    settings: () => navItems.push(createNavItem('設定', '/settings')),
+    users: () => navItems.push(createNavItem('ユーザー 一覧', '/users')),
   }
 
   const pathAction = pathsMapping[urlArray[1] as keyof typeof pathsMapping]

@@ -5,6 +5,7 @@ import { Inter, Noto_Sans_JP } from 'next/font/google'
 import { Toaster } from 'sonner'
 
 import Header from '@/components/common/header'
+import Nav from '@/components/common/nav'
 import { ThemeProvider } from '@/components/theme/provider'
 import FirstSpeakerInfoDialog from '@/components/user/speaker/first_speaker_info_dialog'
 import { cn } from '@/lib/utils'
@@ -42,6 +43,7 @@ export default async function RootLayout({
         >
           <Toaster />
           <Header />
+          <Nav />
           <FirstSpeakerInfoDialog user={user as User} />
           <main>{children}</main>
         </ThemeProvider>

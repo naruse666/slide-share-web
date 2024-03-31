@@ -1,3 +1,5 @@
+import type { Slide } from './slide'
+
 export type Speaker = {
   id: string
   speaker_id: string
@@ -7,4 +9,8 @@ export type Speaker = {
   course: string
   created_at: Date
   updated_at: Date
+}
+
+export type SpeakerWithSlide = Speaker & {
+  slide_list: Slide[]
 }

@@ -31,10 +31,6 @@ export default function BreadcrumbNav() {
         label: 'お問い合わせ',
         url: '/contacts',
       },
-      {
-        label: '設定',
-        url: '/settings',
-      },
     ],
   })
 

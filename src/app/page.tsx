@@ -9,7 +9,6 @@ import { SpeakerList } from './(main)/speakers/_components/speaker_list'
 export default async function Home() {
   return (
     <article>
-      <Nav />
       <ScrollArea className="h-dvh px-4">
         <div className="flex flex-col gap-3 pt-12 pb-24 px-1">
           <CardWrapper

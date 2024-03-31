@@ -4,10 +4,47 @@ import jwt from 'jsonwebtoken'
 import type { z } from 'zod'
 
 import { setSpeakerInfoSchema } from '@/schemas/user'
-import type { ActionsResult, GetSpeakerListActionResult } from '@/types/action'
+import type {
+  ActionsResult,
+  GetSpeakerActionResult,
+  GetSpeakerListActionResult,
+} from '@/types/action'
 
 import { auth, unstable_update } from '../../auth'
 
+export const getSpeaker = async (
+  speakerId: string,
+): Promise<GetSpeakerActionResult> => {
+  const speaker = await fetch(`${process.env.API_URL}/speaker/${speakerId}`, {
+    method: 'GET',
+    cache: 'force-cache',
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return {
+          isSuccess: false,
+          error: {
+            message: '発表者情報の取得に失敗しました',
+          },
+        }
+      }
+      return res.json()
+    })
+    .catch((error) => {
+      return {
+        isSuccess: false,
+        error: {
+          message: error.message,
+        },
+      }
+    })
+
+  return {
+    isSuccess: true,
+    message: '発表者情報を取得しました',
+    data: speaker,
+  }
+}
 export const getSpeakerList = async (): Promise<GetSpeakerListActionResult> => {
   const speakerList = await fetch(`${process.env.API_URL}/speaker`, {
     method: 'GET',

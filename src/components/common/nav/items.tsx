@@ -26,9 +26,26 @@ const navItems = [
   },
 ]
 
-function NavItem({ href, Icon }: { href: string; Icon: LucideIcon }) {
+export const NavItem = ({
+  href,
+  Icon,
+  isStrong,
+}: {
+  href: string
+  Icon: LucideIcon
+  isStrong?: boolean
+}) => {
   const pathname = usePathname()
-  const isActive = pathname.split(/[/?]/)[1] === href.split(/[/?]/)[0]
+  const isAdmin = pathname.split('/')[1] === 'admin'
+  let isActive
+  if (isAdmin) {
+    isActive = pathname.split(/[/?]/)[2] === href.split(/[/?]/)[1]
+  } else {
+    if (href.split('/').length <= 1) {
+      isActive = false
+    }
+    isActive = pathname.split(/[/?]/)[1] === href.split(/[/?]/)[0]
+  }
 
   return (
     <Link
@@ -39,7 +56,8 @@ function NavItem({ href, Icon }: { href: string; Icon: LucideIcon }) {
         ) +
         (isActive
           ? ' bg-blue-500/80 text-white'
-          : ' text-zinc-500 hover:bg-card/90 hover:text-zinc-400')
+          : ' text-zinc-500 hover:bg-card/90 hover:text-zinc-400') +
+        (isStrong ? ' bg-primary/10 text-primary/70' : '')
       }
     >
       <Icon className="w-5 h-5" />

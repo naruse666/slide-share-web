@@ -1,5 +1,6 @@
 import type { Slide, SlideGroup } from './slide'
-import type { Speaker } from './speaker'
+import type { Speaker, SpeakerWithSlide } from './speaker'
+import type { User } from './user'
 
 export type ActionsResult =
   | {
@@ -12,6 +13,14 @@ export type ActionsResult =
         message: string
       }
     }
+
+export type GetUsersActionResult = ActionsResult & {
+  data: User[]
+}
+
+export type GetSpeakerActionResult = ActionsResult & {
+  data: SpeakerWithSlide
+}
 
 export type GetSpeakerListActionResult = ActionsResult & {
   data: Speaker[]
