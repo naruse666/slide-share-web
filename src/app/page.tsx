@@ -1,4 +1,5 @@
-import Nav from '@/components/common/nav'
+import { Suspense } from 'react'
+
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 import CardWrapper from './_components/card-wrapper'
@@ -31,6 +32,7 @@ export default async function Home() {
               text: 'すべてのLTを見る',
             }}
           >
+            <Suspense fallback={<div>Loading...</div>}></Suspense>
             <NewestSlideGroup />
           </CardWrapper>
         </div>

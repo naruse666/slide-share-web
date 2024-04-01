@@ -13,7 +13,7 @@ export default async function SpeakerDetailPage({
 }) {
   const speaker = await getSpeaker(params.speaker_id)
 
-  if (!speaker.isSuccess || speaker.data === null) {
+  if (!speaker.isSuccess || !speaker.data || !speaker.data.speaker_id) {
     redirect('/404')
   }
 
@@ -46,17 +46,29 @@ export default async function SpeakerDetailPage({
           </div>
         </div>
         <p className="text-right mt-4 text-foreground">
-          {speaker.data.slide_list.length} スライド
+          {speaker.data.slide_list
+            ? speaker.data.slide_list.length
+            : 0 + 'スライド'}
         </p>
-        <div className="mt-3 text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
-          {speaker.data.slide_list.map((slide, index) => {
-            slide.speaker_name = speaker.data.display_name
-            slide.speaker_image = speaker.data.image
-            return (
-              <SlideItem slide={slide} group_id={slide.group_id} key={index} />
-            )
-          })}
-        </div>
+        {speaker.data.slide_list ? (
+          <div className="mt-3 text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+            {speaker.data.slide_list.map((slide, index) => {
+              slide.speaker_name = speaker.data.display_name
+              slide.speaker_image = speaker.data.image
+              return (
+                <SlideItem
+                  slide={slide}
+                  group_id={slide.group_id}
+                  key={index}
+                />
+              )
+            })}
+          </div>
+        ) : (
+          <div className="mt-3 mb-6 text-foreground">
+            <p className="text-center">まだスライドがありません 🙇</p>
+          </div>
+        )}
       </CardWrapper>
     </article>
   )

@@ -11,6 +11,21 @@ export const createSlideGroupSchema = z.object({
   presentation_at: z.date({ required_error: '日付を入力してください' }),
 })
 
+export const updateSlideSchema = z.object({
+  id: z
+    .string()
+    .min(1, { message: 'スライドIDは必須です' })
+    .refine((value) => /^[a-zA-Z0-9]*$/.test(value), {
+      message: 'スライドIDは半角英数のみ有効です',
+    }),
+  title: z.string().min(1, 'タイトルは必須です'),
+  is_publish: z.boolean(),
+  drive_pdf_url: z.string(),
+  storage_thumbnail_url: z.string(),
+  google_slide_share_url: z.string(),
+  group_id: z.string(),
+})
+
 export const uploadSlidesSchema = z.object({
   id: z
     .string()

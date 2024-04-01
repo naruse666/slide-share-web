@@ -1,9 +1,10 @@
-import { FilePen } from 'lucide-react'
+'use client'
+
+import { ArrowLeft, FilePen } from 'lucide-react'
+import { useState } from 'react'
 
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -12,27 +13,57 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import type { Slide } from '@/types/slide'
 
-export default function SlideEdit() {
+import SlideEditForm from './edit-form'
+
+export default function SlideEdit({
+  slide,
+  slideGroupId,
+}: {
+  slide: Slide
+  slideGroupId: string
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen}>
       <AlertDialogTrigger>
-        <Button className="flex gap-2">
+        <Button
+          className="flex gap-2"
+          onClick={() => {
+            setIsOpen(true)
+          }}
+        >
           スライド情報を編集する
           <FilePen />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle className="mb-3">
+            スライド情報を編集する
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <SlideEditForm
+              slide={slide}
+              slideGroupId={slideGroupId}
+              setIsOpen={setIsOpen}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <div className="flex justify-center w-full">
+            <button
+              className="flex gap-1 transition-opacity hover:opacity-80"
+              onClick={() => {
+                setIsOpen(false)
+              }}
+            >
+              <ArrowLeft />
+              やめる
+            </button>
+          </div>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -63,7 +63,10 @@ export default async function SlideDetailPage({
         </div>
         {isAdmin && (
           <div className="flex justify-center items-center mt-5">
-            <SlideEdit />
+            <SlideEdit
+              slide={slide.data}
+              slideGroupId={params.slide_group_id}
+            />
           </div>
         )}
       </CardWrapper>

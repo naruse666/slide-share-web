@@ -1,8 +1,3 @@
-'use client'
-
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
-
 import {
   Pagination,
   PaginationContent,
@@ -11,8 +6,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-
-const items = [{ page: '1' }, { page: '2' }, { page: '3' }]
 
 const Item = ({ page, searchPage }: { page: string; searchPage: string }) => {
   return (
@@ -27,38 +20,37 @@ const Item = ({ page, searchPage }: { page: string; searchPage: string }) => {
   )
 }
 
-export default function SlidePagination() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const searchPage = searchParams.get('page')
-
-  useEffect(() => {
-    if (!searchPage || !items.some((item) => item.page === searchPage)) {
-      router.push('slides/?page=1')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchPage])
-
+export default function SlidePagination({
+  pageNumber,
+  currentPage,
+}: {
+  pageNumber: number
+  currentPage: string
+}) {
   return (
     <Pagination>
       <PaginationContent>
-        {searchPage !== '1' ? (
+        {currentPage !== '1' ? (
           <PaginationItem>
             <PaginationPrevious
-              href={`slides/?page=${Number(searchPage) - 1}`}
+              href={`slides/?page=${Number(currentPage) - 1}`}
               className="w-20"
             />
           </PaginationItem>
         ) : (
           <div className="w-20"></div>
         )}
-        {items.map((item, index) => (
-          <Item key={index} page={item.page} searchPage={searchPage || ''} />
+        {Array.from({ length: pageNumber }, (_, index) => (
+          <Item
+            key={index}
+            page={`${index + 1}`}
+            searchPage={currentPage || ''}
+          />
         ))}
-        {searchPage !== items[items.length - 1].page ? (
+        {currentPage !== `${pageNumber}` ? (
           <PaginationItem>
             <PaginationNext
-              href={`slides/?page=${Number(searchPage) + 1}`}
+              href={`slides/?page=${Number(currentPage) + 1}`}
               className="w-20"
             />
           </PaginationItem>

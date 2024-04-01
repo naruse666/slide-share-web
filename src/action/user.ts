@@ -11,6 +11,7 @@ export const signUp = async (user: SignUp) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    cache: 'no-store',
     body: JSON.stringify(user),
   })
   return (await response.json()) as User
@@ -36,6 +37,7 @@ export const getUsers = async (): Promise<GetUsersActionResult> => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${session?.accessToken}`,
     },
+    cache: 'no-store',
   })
     .then((res) => {
       if (!res.ok) {
