@@ -80,7 +80,7 @@ export const getSlideGroup = async (
 ): Promise<GetSlideGroupActionResult> => {
   const slideGroup = await fetch(`${process.env.API_URL}/slides/${id}`, {
     method: 'GET',
-    cache: 'force-cache',
+    cache: 'no-cache',
   })
     .then((res) => {
       if (!res.ok) {

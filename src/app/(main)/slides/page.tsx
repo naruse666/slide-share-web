@@ -49,15 +49,19 @@ export default async function SlidesPage({
                 text: `${slideGroup.title}を見る`,
               }}
             >
-              <div className="text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
-                {slideGroup.slide_list.map((slide, index) => (
-                  <SlideItem
-                    slide={slide}
-                    group_id={slideGroup.id}
-                    key={index}
-                  />
-                ))}
-              </div>
+              {slideGroup.slide_list ? (
+                <div className="text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+                  {slideGroup.slide_list.map((slide, index) => (
+                    <SlideItem
+                      slide={slide}
+                      group_id={slideGroup.id}
+                      key={index}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p>スライドがありません</p>
+              )}
             </CardWrapper>
           ))}
         </div>

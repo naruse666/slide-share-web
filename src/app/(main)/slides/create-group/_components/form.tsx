@@ -66,13 +66,8 @@ export default function CreateGroupFrom({
       }
 
       form.reset()
-      toast.success('グループを作成しました', {
-        duration: 5000,
-        action: {
-          label: 'グループを見る',
-          onClick: () => router.push(`/slides/${values.id}}`),
-        },
-      })
+      router.push(`/slides/${values.id}`)
+      toast.success('グループを作成しました')
     })
   }
 
