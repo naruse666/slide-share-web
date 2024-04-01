@@ -1,14 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SquareArrowOutUpRight } from 'lucide-react'
+import { Loader, SquareArrowOutUpRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import type * as z from 'zod'
 
-import { getSpeakerList, setSpeakerInfo } from '@/action/speaker'
+import { getSlideGroup, uploadSlideByGoogleSlidesURL } from '@/action/slide'
 import { FormError } from '@/components/common/form/form-error'
 import TypeLabel from '@/components/common/form/type-label'
 import { Button } from '@/components/ui/button'
@@ -46,35 +46,44 @@ export default function GoogleSlidesURLFrom({
   })
 
   const onSubmit = (values: z.infer<typeof uploadSlidesSchema>) => {
-    console.log(values)
     setError('')
     startTransition(async () => {
-      // const speakerList = await getSpeakerList()
-      // if (!speakerList.isSuccess) {
-      //   setError(speakerList.error.message)
-      //   return
-      // }
-      // const isExist = speakerList.data.some(
-      //   (speaker) =>
-      //     speaker.speaker_id === values.speaker_id && speaker.id !== user.id,
-      // )
-      // if (isExist) {
-      //   setError('すでに存在する発表者IDです')
-      //   return
-      // }
-      // const result = await setSpeakerInfo(values)
-      // if (!result.isSuccess) {
-      //   setError(result.error.message)
-      //   return
-      // }
-      // toast.success(result.message)
+      if (user.role === 'user') {
+        setError('権限がありません')
+        return
+      }
 
-      toast.success('アップロードしました', {
-        action: {
-          label: 'スライドを見る',
-          onClick: () => router.push(`/slides/${slideGroupId}/${values.id}}`),
-        },
-      })
+      const slideGroup = await getSlideGroup(slideGroupId)
+      if (!slideGroup.isSuccess) {
+        setError(slideGroup.error.message)
+        return
+      }
+
+      if (!slideGroup.data) {
+        setError('スライドグループが見つかりません')
+        return
+      }
+      const isExist =
+        slideGroup.data.slide_list &&
+        slideGroup.data.slide_list.some((slide) => slide.id === values.id)
+      if (isExist) {
+        setError('すでに登録されているスライドIDです')
+        return
+      }
+
+      const result = await uploadSlideByGoogleSlidesURL(
+        values,
+        slideGroupId,
+        slideGroup.data.drive_id,
+      )
+      if (!result.isSuccess) {
+        setError(result.error.message)
+        return
+      }
+
+      form.reset()
+      router.push(`/slides/${slideGroupId}/${values.id}`)
+      toast.success('アップロードしました')
     })
   }
 
@@ -136,8 +145,14 @@ export default function GoogleSlidesURLFrom({
               </FormLabel>
               <FormDescription className="text-xs">
                 Google SlidesのURLを入力してください。
-                <br />
-                Power Point等のURLは対応していません。
+                <a
+                  target="_blank"
+                  className="text-primary inline-flex items-center gap-1 hover:underline"
+                  href="https://chlorinated-skateboard-53e.notion.site/Google-Slides-URL-8055286246164b2585be382e93eb3c9d?pvs=4"
+                >
+                  URL の取得方法
+                  <SquareArrowOutUpRight className="w-3 h-3" />
+                </a>
               </FormDescription>
               <FormControl>
                 <Input
@@ -189,6 +204,7 @@ export default function GoogleSlidesURLFrom({
           disabled={isPending}
           className="w-full font-bold tracking-wider"
         >
+          {isPending && <Loader className="w-5 h-5 mr-2 animate-spin" />}
           アップロード
         </Button>
       </form>

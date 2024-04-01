@@ -5,7 +5,11 @@ import { revalidatePath } from 'next/cache'
 import type { ActionResult } from 'next/dist/server/app-render/types'
 import type { z } from 'zod'
 
-import { createSlideGroupSchema, updateSlideSchema } from '@/schemas/slide'
+import {
+  createSlideGroupSchema,
+  updateSlideSchema,
+  uploadSlidesSchema,
+} from '@/schemas/slide'
 import type {
   ActionsResult,
   GetSlideActionResult,
@@ -302,5 +306,90 @@ export const updateSlide = async (
   return {
     isSuccess: true,
     message: 'スライドを更新しました',
+  }
+}
+
+export const uploadSlideByGoogleSlidesURL = async (
+  values: z.infer<typeof uploadSlidesSchema>,
+  group_id: string,
+  drive_id: string,
+): Promise<ActionResult> => {
+  const validatedFields = uploadSlidesSchema.safeParse(values)
+  const session = await auth()
+  const user = session?.user
+
+  if (!user) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'ログインしてください',
+      },
+    }
+  }
+
+  const decoded = jwt.verify(session.accessToken, process.env.AUTH_SECRET!)
+  if (typeof decoded === 'object' && decoded.id !== user.id) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'IDが一致しません',
+      },
+    }
+  }
+
+  if (!validatedFields.success) {
+    return {
+      isSuccess: false,
+      error: {
+        message: validatedFields.error.message,
+      },
+    }
+  }
+
+  const result = await fetch(`${process.env.API_URL}/slides`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session.accessToken}`,
+    },
+    body: JSON.stringify({
+      ...values,
+      is_publish: false,
+      group_id,
+      speaker_id: user.speaker_id,
+      drive_id,
+    }),
+  })
+    .then(async (res) => {
+      if (!res.ok) {
+        return await res.json()
+      }
+      return {
+        isSuccess: true,
+        message: 'スライドをアップロードしました',
+      }
+    })
+    .catch((error) => {
+      console.log('error', error)
+      return {
+        isSuccess: false,
+        error: {
+          message: error.message,
+        },
+      }
+    })
+
+  if (!result.isSuccess) {
+    return {
+      isSuccess: false,
+      error: {
+        message: result,
+      },
+    }
+  }
+
+  return {
+    isSuccess: true,
+    message: 'スライドをアップロードしました',
   }
 }

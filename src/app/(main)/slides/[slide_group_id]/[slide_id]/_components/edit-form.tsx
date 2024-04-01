@@ -52,7 +52,6 @@ export default function SlideEditForm({
   })
 
   const onSubmit = (values: z.infer<typeof updateSlideSchema>) => {
-    console.log(values)
     startTransition(async () => {
       const result = await updateSlide(values)
       if (!result.isSuccess) {
