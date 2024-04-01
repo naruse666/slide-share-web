@@ -1,6 +1,7 @@
 'use server'
 
 import jwt from 'jsonwebtoken'
+import { revalidatePath } from 'next/cache'
 import type { ActionResult } from 'next/dist/server/app-render/types'
 import type { z } from 'zod'
 
@@ -80,7 +81,7 @@ export const getSlideGroup = async (
 ): Promise<GetSlideGroupActionResult> => {
   const slideGroup = await fetch(`${process.env.API_URL}/slides/${id}`, {
     method: 'GET',
-    cache: 'no-cache',
+    cache: 'no-store',
   })
     .then((res) => {
       if (!res.ok) {
@@ -196,6 +197,8 @@ export const createSlideGroup = async (
         },
       }
     })
+
+  revalidatePath('/slides')
 
   return {
     isSuccess: true,

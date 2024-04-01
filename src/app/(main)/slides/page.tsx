@@ -21,8 +21,12 @@ export default async function SlidesPage({
   if (!slideAllGroups.isSuccess || !pageSlideGroups.isSuccess) {
     return <div>エラーが発生しました</div>
   }
-  if (!pageSlideGroups.data) {
+  if (!searchParams.page) {
     redirect('/slides?page=1')
+  }
+  if (!pageSlideGroups.data) {
+    console.log('pageSlideGroups.data', pageSlideGroups)
+    return <div>スライドがありません</div>
   }
 
   return (
@@ -36,7 +40,7 @@ export default async function SlidesPage({
       >
         <SlidePagination
           currentPage={searchParams.page}
-          pageNumber={Math.floor(slideAllGroups.data.length / 5) + 1}
+          pageNumber={Math.ceil(slideAllGroups.data.length / 5)}
         />
         <div className="py-6 flex flex-col gap-3">
           {pageSlideGroups.data.map((slideGroup, index) => (
@@ -67,7 +71,7 @@ export default async function SlidesPage({
         </div>
         <SlidePagination
           currentPage={searchParams.page}
-          pageNumber={Math.floor(slideAllGroups.data.length / 5) + 1}
+          pageNumber={Math.ceil(slideAllGroups.data.length / 5)}
         />
       </CardWrapper>
     </article>
