@@ -46,9 +46,8 @@ export default async function SpeakerDetailPage({
           </div>
         </div>
         <p className="text-right mt-4 text-foreground">
-          {speaker.data.slide_list
-            ? speaker.data.slide_list.length
-            : 0 + 'スライド'}
+          {speaker.data.slide_list ? speaker.data.slide_list.length : 0}{' '}
+          スライド
         </p>
         {speaker.data.slide_list ? (
           <div className="mt-3 text-foreground grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
