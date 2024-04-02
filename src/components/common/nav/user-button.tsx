@@ -1,5 +1,7 @@
+import { Speech } from 'lucide-react'
 import Link from 'next/link'
 
+import { ThemeToggle } from '@/components/theme/toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
@@ -19,6 +21,7 @@ import SignOutButton from './sign-out-button'
 export default async function UserButton() {
   const session = await auth()
   const user = session?.user
+  const isMember = user?.role === 'speaker' || user?.role === 'admin'
 
   return (
     <div className="h-8">
@@ -34,9 +37,12 @@ export default async function UserButton() {
             <div className="px-2">
               <div className="flex justify-between">
                 <p className="text-foreground">{user.display_name}</p>
-                {user.role != 'user' && (
-                  <Badge>{user.role == 'admin' ? '管理者' : '発表者'}</Badge>
-                )}
+                <div className="flex gap-2">
+                  <ThemeToggle />
+                  {user.role != 'user' && (
+                    <Badge>{user.role == 'admin' ? '管理者' : '発表者'}</Badge>
+                  )}
+                </div>
               </div>
               {user.role != 'user' && (
                 <>
@@ -55,8 +61,20 @@ export default async function UserButton() {
             <div className="mt-2">
               <Separator />
             </div>
-            <SpeakerInfoDialog user={user as User} />
-            <Separator />
+            {isMember && (
+              <>
+                <SpeakerInfoDialog user={user as User} />
+                <Separator />
+                <Link
+                  href={`/speakers/${user.speaker_id}`}
+                  className="text-sm w-full flex gap-1 justify-start items-center my-0.5 p-1.5 pl-2 rounded transition-colors hover:text-foreground hover:bg-black/10 hover:dark:bg-white/10"
+                >
+                  <Speech className="w-5 h-5" />
+                  発表者ページを見る
+                </Link>
+                <Separator />
+              </>
+            )}
             <SignOutButton />
           </PopoverContent>
         </Popover>
