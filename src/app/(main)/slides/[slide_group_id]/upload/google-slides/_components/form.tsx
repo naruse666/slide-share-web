@@ -52,13 +52,11 @@ export default function GoogleSlidesURLFrom({
         setError('権限がありません')
         return
       }
-
       const slideGroup = await getSlideGroup(slideGroupId)
       if (!slideGroup.isSuccess) {
         setError(slideGroup.error.message)
         return
       }
-
       if (!slideGroup.data) {
         setError('スライドグループが見つかりません')
         return
@@ -70,7 +68,6 @@ export default function GoogleSlidesURLFrom({
         setError('すでに登録されているスライドIDです')
         return
       }
-
       const result = await uploadSlideByGoogleSlidesURL(
         values,
         slideGroupId,
@@ -80,10 +77,9 @@ export default function GoogleSlidesURLFrom({
         setError(result.error.message)
         return
       }
-
       form.reset()
-      router.push(`/slides/${slideGroupId}/${values.id}`)
-      toast.success('アップロードしました')
+      router.push(`/slides/${slideGroupId}/${values.id}?status=new`)
+      toast.success('アップロードに成功しました🎉')
     })
   }
 

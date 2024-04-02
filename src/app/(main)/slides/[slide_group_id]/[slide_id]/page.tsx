@@ -3,16 +3,20 @@ import { redirect } from 'next/navigation'
 
 import { getSlide } from '@/action/slide'
 import CardWrapper from '@/app/_components/card-wrapper'
+import SlideConfetti from '@/components/confetti'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { convertToEmbedUrl } from '@/utils/convert-embed-url'
 
 import { auth } from '../../../../../../auth'
 import SlideEdit from './_components/slide_edit'
 
 export default async function SlideDetailPage({
   params,
+  searchParams,
 }: {
   params: { slide_group_id: string; slide_id: string }
+  searchParams: { status: string }
 }) {
   const session = await auth()
   const user = session?.user
@@ -56,10 +60,18 @@ export default async function SlideDetailPage({
           )}
         </div>
         <div className="grid place-items-center border shadow-md bg-[#212121] dark:bg-[#313131] rounded-md">
-          <iframe
-            src={slide.data.drive_pdf_url}
-            className="w-full max-w-[920px] aspect-video"
-          ></iframe>
+          {slide.data.google_slide_share_url ? (
+            <iframe
+              src={convertToEmbedUrl(slide.data.google_slide_share_url)}
+              className="w-full max-w-[920px] aspect-video"
+              allowFullScreen={true}
+            ></iframe>
+          ) : (
+            <iframe
+              src={slide.data.drive_pdf_url}
+              className="w-full max-w-[920px] aspect-video"
+            ></iframe>
+          )}
         </div>
         {isAdmin && (
           <div className="flex justify-center items-center mt-5">
@@ -70,6 +82,7 @@ export default async function SlideDetailPage({
           </div>
         )}
       </CardWrapper>
+      {searchParams.status === 'new' && <SlideConfetti />}
     </article>
   )
 }
