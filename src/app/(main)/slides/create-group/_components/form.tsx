@@ -52,7 +52,9 @@ export default function CreateGroupFrom({
   const onSubmit = (values: z.infer<typeof createSlideGroupSchema>) => {
     setError('')
     startTransition(async () => {
-      const isExist = slideGroups.some((slideGroup) => slideGroup === values.id)
+      const isExist =
+        slideGroups &&
+        slideGroups.some((slideGroup) => slideGroup === values.id)
 
       if (isExist) {
         setError('すでに存在するグループIDです')

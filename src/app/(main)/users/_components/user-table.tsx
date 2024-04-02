@@ -87,7 +87,7 @@ export const columns: ColumnDef<User>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          役職
+          権限
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -197,7 +197,7 @@ export const columns: ColumnDef<User>[] = [
   },
 ]
 
-export function DataTableDemo({ data }: { data: User[] }) {
+export function UsersTable({ data }: { data: User[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
