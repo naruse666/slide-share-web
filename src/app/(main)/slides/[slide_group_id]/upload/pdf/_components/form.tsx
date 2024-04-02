@@ -1,14 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SquareArrowOutUpRight } from 'lucide-react'
+import { Loader } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import type * as z from 'zod'
 
-import { getSpeakerList, setSpeakerInfo } from '@/action/speaker'
+import { getSlideGroup, uploadSlideByPDF } from '@/action/slide'
 import { FormError } from '@/components/common/form/form-error'
 import TypeLabel from '@/components/common/form/type-label'
 import { Button } from '@/components/ui/button'
@@ -19,7 +19,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { uploadPDFSchema } from '@/schemas/slide'
@@ -40,36 +39,59 @@ export default function PDFFrom({
     resolver: zodResolver(uploadPDFSchema),
   })
   const fileRef = form.register('pdf_file')
+  const thumbnailRef = form.register('thumbnail')
 
   const onSubmit = (values: z.infer<typeof uploadPDFSchema>) => {
     setError('')
     startTransition(async () => {
-      // const speakerList = await getSpeakerList()
-      // if (!speakerList.isSuccess) {
-      //   setError(speakerList.error.message)
-      //   return
-      // }
-      // const isExist = speakerList.data.some(
-      //   (speaker) =>
-      //     speaker.speaker_id === values.speaker_id && speaker.id !== user.id,
-      // )
-      // if (isExist) {
-      //   setError('すでに存在する発表者IDです')
-      //   return
-      // }
-      // const result = await setSpeakerInfo(values)
-      // if (!result.isSuccess) {
-      //   setError(result.error.message)
-      //   return
-      // }
-      // toast.success(result.message)
+      if (user.role === 'user') {
+        setError('権限がありません')
+        return
+      }
+      const slideGroup = await getSlideGroup(slideGroupId)
+      if (!slideGroup.isSuccess) {
+        setError(slideGroup.error.message)
+        return
+      }
+      if (!slideGroup.data) {
+        setError('スライドグループが見つかりません')
+        return
+      }
+      const isExist =
+        slideGroup.data.slide_list &&
+        slideGroup.data.slide_list.some((slide) => slide.id === values.id)
+      if (isExist) {
+        setError('すでに登録されているスライドIDです')
+        return
+      }
 
-      toast.success('アップロードしました', {
-        action: {
-          label: 'スライドを見る',
-          onClick: () => router.push(`/slides/${slideGroupId}/${values.id}}`),
-        },
-      })
+      const requestValues = {
+        id: values.id,
+        title: values.title,
+        is_publish: false,
+        group_id: slideGroupId,
+        speaker_id: user.speaker_id,
+        drive_id: slideGroup.data.drive_id,
+      }
+
+      const formData = new FormData()
+      formData.append('pdf', values.pdf_file[0])
+      if (values.thumbnail) {
+        formData.append('thumbnail', values.thumbnail[0])
+      }
+      formData.append('data', JSON.stringify(requestValues))
+
+      const result = await uploadSlideByPDF(requestValues, formData)
+      if (!result.isSuccess) {
+        setError(result.error.message)
+        return
+      }
+
+      console.log('result', result)
+
+      form.reset()
+      router.push(`/slides/${slideGroupId}/${values.id}?status=new`)
+      toast.success('アップロードに成功しました🎉')
     })
   }
 
@@ -142,32 +164,21 @@ export default function PDFFrom({
         />
         <FormField
           control={form.control}
-          name="slides_share_url"
+          name="thumbnail"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Google Slides 公開URL
+                サムネイル画像
                 <TypeLabel type="任意" />
               </FormLabel>
               <FormDescription className="text-xs">
-                Google Slidesの公開URLを入力してください。
-                <a
-                  target="_blank"
-                  className="text-primary inline-flex items-center gap-1 hover:underline"
-                  href="https://chlorinated-skateboard-53e.notion.site/Google-Slides-URL-24f7fa2a0bde47ff97d38bca305112b0?pvs=4"
-                >
-                  公開URL の取得方法
-                  <SquareArrowOutUpRight className="w-3 h-3" />
-                </a>
+                サムネイル画像を選択してください。
               </FormDescription>
               <FormControl>
-                <Input
-                  placeholder="https://docs.google.com/presentation/d/e/xxx/pub?..."
-                  {...field}
-                />
+                <Input type="file" {...thumbnailRef} />
               </FormControl>
               <p className="text-red-500 text-xs">
-                {form.formState.errors.slides_share_url?.message}
+                {form.formState.errors.thumbnail?.message?.toString()}
               </p>
             </FormItem>
           )}
@@ -178,6 +189,7 @@ export default function PDFFrom({
           disabled={isPending}
           className="w-full font-bold tracking-wider"
         >
+          {isPending && <Loader className="w-5 h-5 mr-2 animate-spin" />}
           アップロード
         </Button>
       </form>

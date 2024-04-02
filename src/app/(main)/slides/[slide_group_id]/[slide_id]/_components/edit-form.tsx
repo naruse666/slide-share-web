@@ -122,6 +122,48 @@ export default function SlideEditForm({
         />
         <FormField
           control={form.control}
+          name="drive_pdf_url"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                PDF URL
+                <TypeLabel type="必須" />
+              </FormLabel>
+              <FormDescription className="text-xs">
+                PDFのURLを入力してください。
+              </FormDescription>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <p className="text-red-500 text-xs">
+                {form.formState.errors.drive_pdf_url?.message}
+              </p>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="storage_thumbnail_url"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                サムネイルURL
+                <TypeLabel type="任意" />
+              </FormLabel>
+              <FormDescription className="text-xs">
+                サムネイルの画像URLを入力してください。
+              </FormDescription>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <p className="text-red-500 text-xs">
+                {form.formState.errors.google_slide_share_url?.message}
+              </p>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="google_slide_share_url"
           render={({ field }) => (
             <FormItem>

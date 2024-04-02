@@ -20,7 +20,7 @@ export const updateSlideSchema = z.object({
     }),
   title: z.string().min(1, 'タイトルは必須です'),
   is_publish: z.boolean(),
-  drive_pdf_url: z.string(),
+  drive_pdf_url: z.string().url('有効なURLを入力してください'),
   storage_thumbnail_url: z.string(),
   google_slide_share_url: z.string(),
   group_id: z.string(),
@@ -55,5 +55,15 @@ export const uploadPDFSchema = z.object({
       (files) => ['application/pdf'].includes(files?.[0]?.type),
       'PDFファイルを選択してください',
     ),
+  thumbnail: z.any().optional(),
+})
+export const uploadPDFRequestSchema = z.object({
+  id: z
+    .string()
+    .min(1, { message: '発表者IDは必須です' })
+    .refine((value) => /^[a-zA-Z0-9]*$/.test(value), {
+      message: 'スライドIDは半角英数のみ有効です',
+    }),
+  title: z.string().min(1, 'タイトルは必須です'),
   slides_share_url: z.string().optional(),
 })

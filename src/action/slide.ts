@@ -8,6 +8,8 @@ import type { z } from 'zod'
 import {
   createSlideGroupSchema,
   updateSlideSchema,
+  uploadPDFRequestSchema,
+  uploadPDFSchema,
   uploadSlidesSchema,
 } from '@/schemas/slide'
 import type {
@@ -346,7 +348,7 @@ export const uploadSlideByGoogleSlidesURL = async (
     }
   }
 
-  const result = await fetch(`${process.env.API_URL}/slides`, {
+  const result = await fetch(`${process.env.API_URL}/slides/upload/slides`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -390,5 +392,85 @@ export const uploadSlideByGoogleSlidesURL = async (
   return {
     isSuccess: true,
     message: 'スライドをアップロードしました',
+  }
+}
+
+export const uploadSlideByPDF = async (
+  values: z.infer<typeof uploadPDFRequestSchema>,
+  formData: FormData,
+): Promise<ActionResult> => {
+  try {
+    const validatedFields = uploadPDFRequestSchema.safeParse(values)
+    const session = await auth()
+    const user = session?.user
+
+    if (!user) {
+      return {
+        isSuccess: false,
+        error: {
+          message: 'ログインしてください',
+        },
+      }
+    }
+
+    const decoded = jwt.verify(session.accessToken, process.env.AUTH_SECRET!)
+    if (typeof decoded === 'object' && decoded.id !== user.id) {
+      return {
+        isSuccess: false,
+        error: {
+          message: 'IDが一致しません',
+        },
+      }
+    }
+
+    if (!validatedFields.success) {
+      return {
+        isSuccess: false,
+        error: {
+          message: validatedFields.error.message,
+        },
+      }
+    }
+
+    const result = await fetch(`${process.env.API_URL}/slides/upload/pdf`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${session.accessToken}`,
+      },
+      body: formData,
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          return await res.json()
+        }
+        return {
+          isSuccess: true,
+          message: 'スライドをアップロードしました',
+        }
+      })
+      .catch((error) => {
+        return {
+          isSuccess: false,
+          error: {
+            message: error.message,
+          },
+        }
+      })
+
+    if (!result.isSuccess) {
+      return {
+        isSuccess: false,
+        error: {
+          message: result,
+        },
+      }
+    }
+
+    return {
+      isSuccess: true,
+      message: 'スライドをアップロードしました',
+    }
+  } catch (error) {
+    console.log('error', error)
   }
 }

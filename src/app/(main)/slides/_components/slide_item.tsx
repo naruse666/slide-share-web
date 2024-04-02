@@ -8,6 +8,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import type { Slide } from '@/types/slide'
 
 import { auth } from '../../../../../auth'
+import SlideDummyImage from './assets/slide-dummy.jpg'
+import SlideImage from './slide_image'
 
 export const SlideSkeleton = () => (
   <div className="bg-border/50 flex flex-col gap-2.5 rounded-md">
@@ -55,11 +57,11 @@ export default async function SlideItem({
         </Badge>
       )}
       <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-t-md">
-        <Image
+        <SlideImage
           src={slide.storage_thumbnail_url}
-          className="object-contain transition-all duration-300 group-hover:scale-105"
-          alt="lt thumbnail"
-          fill
+          alt={slide.title}
+          speaker_name={slide.speaker_name}
+          speaker_image={slide.speaker_image}
         />
       </AspectRatio>
       <p className="px-2 text-sm">{slide.title}</p>

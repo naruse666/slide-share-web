@@ -35,19 +35,10 @@ export default async function UploadPage({
           text: `${slideGroup.data.title} のLTを見る`,
         }}
       >
-        <p className="text-center text-foreground mb-4">
+        <p className="text-center text-foreground mb-6">
           アップロードするファイルを選択してください
         </p>
         <div className="flex flex-wrap gap-6 justify-center items-center">
-          <Link
-            href={`/slides/${slideGroup.data.id}/upload/pdf`}
-            className="border rounded-md shadow-md py-6 px-4 cursor-pointer bg-primary/10 transition duration-300 hover:bg-primary/30"
-          >
-            <Image src={PDFImage} className="w-52" alt="PDFアイコン" />
-            <p className="text-foreground text-center mt-4 font-semibold">
-              PDF
-            </p>
-          </Link>
           <Link
             href={`/slides/${slideGroup.data.id}/upload/google-slides`}
             className="border rounded-md shadow-md py-6 px-4 cursor-pointer bg-primary/10 transition duration-300 hover:bg-primary/30"
@@ -57,8 +48,17 @@ export default async function UploadPage({
               Google Slides URL
             </p>
           </Link>
+          <Link
+            href={`/slides/${slideGroup.data.id}/upload/pdf`}
+            className="border rounded-md shadow-md py-6 px-4 cursor-pointer bg-primary/10 transition duration-300 hover:bg-primary/30"
+          >
+            <Image src={PDFImage} className="w-52" alt="PDFアイコン" />
+            <p className="text-foreground text-center mt-4 font-semibold">
+              PDF
+            </p>
+          </Link>
         </div>
-        <p className="text-center mt-4 text-sm text-balance">
+        <p className="text-center mt-6 text-sm text-balance">
           他のファイル形式が必要な場合は、管理者にお問い合わせください。
         </p>
       </CardWrapper>
