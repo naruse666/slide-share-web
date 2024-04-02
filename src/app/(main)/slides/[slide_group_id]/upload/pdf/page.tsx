@@ -1,3 +1,5 @@
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { getSlideGroup } from '@/action/slide'
@@ -35,6 +37,15 @@ export default async function UploadSlideFromPDFPage({
       >
         <UploadFormWrapper>
           <PDFFrom user={user as User} slideGroupId={params.slide_group_id} />
+          <div className="flex gap-1 justify-center items-center mt-3 mr-6 group text-foreground">
+            <ArrowLeft className="w-5 h-5 transition duration-300 group-hover:-translate-x-1" />
+            <Link
+              className="text-center"
+              href={`/slides/${params.slide_group_id}/upload`}
+            >
+              戻る
+            </Link>
+          </div>
         </UploadFormWrapper>
       </CardWrapper>
     </article>
