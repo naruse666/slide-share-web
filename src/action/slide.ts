@@ -370,7 +370,6 @@ export const uploadSlideByGoogleSlidesURL = async (
       }
     })
     .catch((error) => {
-      console.log('error', error)
       return {
         isSuccess: false,
         error: {

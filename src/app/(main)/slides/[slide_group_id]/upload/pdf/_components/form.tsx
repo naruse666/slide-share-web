@@ -42,8 +42,6 @@ export default function PDFFrom({
   const fileRef = form.register('pdf_file')
 
   const onSubmit = (values: z.infer<typeof uploadPDFSchema>) => {
-    console.log(values)
-    console.log('pdffile', values.pdf_file[0])
     setError('')
     startTransition(async () => {
       // const speakerList = await getSpeakerList()

@@ -25,7 +25,6 @@ export default async function SlidesPage({
     redirect('/slides?page=1')
   }
   if (!pageSlideGroups.data) {
-    console.log('pageSlideGroups.data', pageSlideGroups)
     return <div>スライドがありません</div>
   }
 

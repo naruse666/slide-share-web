@@ -52,8 +52,6 @@ export default function ContactFrom({ user }: { user?: User }) {
         return
       }
 
-      console.log('response', response)
-
       form.reset()
       toast.success('送信に成功しました🎉', {
         duration: 1000,

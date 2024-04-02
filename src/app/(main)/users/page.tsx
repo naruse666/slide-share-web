@@ -12,8 +12,6 @@ export default async function UsersPage() {
   const user = session?.user
   const users = await getUsers()
 
-  console.log(users)
-
   if (user?.role !== 'admin') {
     redirect('/404')
   }
