@@ -19,6 +19,7 @@ export default async function SlideGroupPage({
   const session = await auth()
   const user = session?.user
   const slideGroup = await getSlideGroup(params.slide_group_id)
+  const isMember = user?.role == 'admin' || user?.role == 'speaker'
 
   if (!slideGroup.isSuccess || slideGroup.data === null) {
     redirect('/404')
@@ -49,7 +50,7 @@ export default async function SlideGroupPage({
             <p className="text-foreground">まだスライドがありません</p>
           </div>
         )}
-        {user?.role !== 'user' && (
+        {isMember && (
           <div className="flex justify-center items-center gap-3 flex-wrap pt-5">
             {user?.role === 'admin' && <GroupEdit />}
             <Link
