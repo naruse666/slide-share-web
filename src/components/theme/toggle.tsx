@@ -19,11 +19,17 @@ export const ThemeToggle: FC<ThemeToggleProps> = (props) => {
   return (
     <Popover>
       <PopoverTrigger className="text-foreground">
-        {systemTheme === 'light' && (
-          <Sun aria-hidden="true" className="h-5 w-5" />
-        )}
-        {systemTheme === 'dark' && (
-          <Moon aria-hidden="true" className="h-5 w-5" />
+        {theme === 'light' && <Sun aria-hidden="true" className="h-5 w-5" />}
+        {theme === 'dark' && <Moon aria-hidden="true" className="h-5 w-5" />}
+        {theme === 'system' && (
+          <>
+            {systemTheme === 'light' && (
+              <Sun aria-hidden="true" className="h-5 w-5" />
+            )}
+            {systemTheme === 'dark' && (
+              <Moon aria-hidden="true" className="h-5 w-5" />
+            )}
+          </>
         )}
       </PopoverTrigger>
       <PopoverContent sideOffset={-78} className="mb-10 mr-20">
