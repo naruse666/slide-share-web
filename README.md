@@ -22,3 +22,4 @@ bun dev
  - [Prettier](https://prettier.io/)
  - [ESLint](https://eslint.org/)
  - [Husky](https://typicode.github.io/husky/)
+ - [Vercel](https://vercel.com/)
