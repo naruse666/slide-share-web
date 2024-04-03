@@ -1,12 +1,16 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getSlideGroups } from '@/action/slide'
 import CardWrapper from '@/app/_components/card-wrapper'
-import type { User } from '@/types/user'
 
 import { auth } from '../../../../../auth'
 import UploadFormWrapper from '../[slide_group_id]/upload/_components/form-wrapper'
 import CreateGroupFrom from './_components/form'
+
+export const metadata: Metadata = {
+  title: 'グループ作成',
+}
 
 export default async function CreateGroupPage() {
   const session = await auth()

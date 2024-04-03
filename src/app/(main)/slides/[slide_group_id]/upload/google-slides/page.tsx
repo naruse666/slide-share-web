@@ -1,4 +1,5 @@
 import { ArrowLeft } from 'lucide-react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
@@ -9,6 +10,10 @@ import type { User } from '@/types/user'
 import { auth } from '../../../../../../../auth'
 import UploadFormWrapper from '../_components/form-wrapper'
 import GoogleSlidesURLFrom from './_components/form'
+
+export const metadata: Metadata = {
+  title: 'Google Slides | スライドアップロード',
+}
 
 export default async function UploadSlideFromGoogleSlideURLPage({
   params,

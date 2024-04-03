@@ -1,8 +1,14 @@
+import type { Metadata } from 'next'
+
 import CardWrapper from '@/app/_components/card-wrapper'
 import type { User } from '@/types/user'
 
 import { auth } from '../../../../auth'
 import ContactFrom from './_components/form'
+
+export const metadata: Metadata = {
+  title: 'お問い合わせ',
+}
 
 export default async function ContactsPage() {
   const session = await auth()

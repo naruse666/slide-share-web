@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getUsers } from '@/action/user'
@@ -6,6 +7,10 @@ import type { User } from '@/types/user'
 
 import { auth } from '../../../../auth'
 import { UsersTable } from './_components/user-table'
+
+export const metadata: Metadata = {
+  title: 'ユーザー 一覧',
+}
 
 export default async function UsersPage() {
   const session = await auth()

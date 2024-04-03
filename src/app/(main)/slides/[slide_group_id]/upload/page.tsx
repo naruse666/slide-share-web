@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -8,6 +9,10 @@ import CardWrapper from '@/app/_components/card-wrapper'
 import { auth } from '../../../../../../auth'
 import PDFImage from './assets/pdf.png'
 import SlideImage from './assets/slides.png'
+
+export const metadata: Metadata = {
+  title: 'スライドアップロード',
+}
 
 export default async function UploadPage({
   params,

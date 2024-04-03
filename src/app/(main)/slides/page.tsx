@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getSlideGroups, getSlideGroupsByPage } from '@/action/slide'
@@ -7,6 +8,10 @@ import { convertToJST } from '@/utils/convert-jwt'
 import { auth } from '../../../../auth'
 import SlideItem from './_components/slide_item'
 import SlidePagination from './_components/slide_pagination'
+
+export const metadata: Metadata = {
+  title: 'スライド一覧',
+}
 
 export default async function SlidesPage({
   searchParams,

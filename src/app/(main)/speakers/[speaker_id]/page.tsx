@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getSpeaker } from '@/action/speaker'
@@ -5,6 +6,10 @@ import CardWrapper from '@/app/_components/card-wrapper'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import SlideItem from '../../slides/_components/slide_item'
+
+export const metadata: Metadata = {
+  title: '発表者詳細',
+}
 
 export default async function SpeakerDetailPage({
   params,

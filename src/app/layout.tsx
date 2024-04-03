@@ -17,8 +17,13 @@ const inter = Inter({ subsets: ['latin'] })
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'LT Slide Share',
-  description: 'LT Slide Share',
+  title: {
+    template: '%s | TECH.C. LTサークル',
+    default: 'TECH.C. LTサークル',
+  },
+  description:
+    'TECH.C. LTサークルのWebサイトです。毎週開催しているLTの情報を掲載しています。',
+  keywords: ['TECH.C.', 'LT', 'サークル', '技術', '技術共有', '技術交流'],
 }
 
 export default async function RootLayout({

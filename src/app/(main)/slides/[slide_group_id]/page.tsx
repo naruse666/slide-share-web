@@ -1,4 +1,5 @@
 import { FileUp } from 'lucide-react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
@@ -10,6 +11,10 @@ import { convertToJST } from '@/utils/convert-jwt'
 import { auth } from '../../../../../auth'
 import SlideItem from '../_components/slide_item'
 import GroupEdit from './_components/group_edit'
+
+export const metadata: Metadata = {
+  title: 'スライドグループ',
+}
 
 export default async function SlideGroupPage({
   params,
