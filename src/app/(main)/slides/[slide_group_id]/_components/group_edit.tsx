@@ -1,9 +1,10 @@
-import { FolderPen } from 'lucide-react'
+'use client'
+
+import { ArrowLeft, FolderPen } from 'lucide-react'
+import { useState } from 'react'
 
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -12,12 +13,30 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import type { SlideGroup } from '@/types/slide'
+import type { User } from '@/types/user'
 
-export default function GroupEdit() {
+import GroupEditForm from './edit-form'
+
+export default function GroupEdit({
+  user,
+  slideGroup,
+}: {
+  user: User
+  slideGroup: SlideGroup
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen}>
       <AlertDialogTrigger>
-        <Button variant="outline" className="flex gap-2">
+        <Button
+          variant="outline"
+          className="flex gap-2"
+          onClick={() => {
+            setIsOpen(true)
+          }}
+        >
           グループを編集する
           <FolderPen />
         </Button>
@@ -26,13 +45,25 @@ export default function GroupEdit() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <GroupEditForm
+              user={user}
+              slideGroup={slideGroup}
+              setIsOpen={setIsOpen}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <div className="flex justify-center w-full">
+            <button
+              className="flex justify-center items-center gap-1 text-sm group mr-4"
+              onClick={() => {
+                setIsOpen(false)
+              }}
+            >
+              <ArrowLeft className="h-4 w-4 transition duration-300 group-hover:-translate-x-1" />
+              やめる
+            </button>
+          </div>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

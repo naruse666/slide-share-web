@@ -36,7 +36,13 @@ export default async function SlideDetailPage({
 
   return (
     <article className="pb-24">
-      <CardWrapper title={slide.data.title}>
+      <CardWrapper
+        title={slide.data.title}
+        link={{
+          href: `/slides/${params.slide_group_id}`,
+          text: '同じLTのスライドを見る',
+        }}
+      >
         <div className="flex justify-between items-center">
           <Link
             href={`/speakers/${slide.data.speaker_id}`}

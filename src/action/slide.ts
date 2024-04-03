@@ -145,11 +145,11 @@ export const createSlideGroup = async (
   const session = await auth()
   const user = session?.user
 
-  if (!user) {
+  if (!user || user?.role !== 'admin') {
     return {
       isSuccess: false,
       error: {
-        message: 'ログインしてください',
+        message: '権限がありません',
       },
     }
   }
@@ -209,6 +209,80 @@ export const createSlideGroup = async (
   return {
     isSuccess: true,
     message: 'スライドグループを作成しました',
+  }
+}
+
+export const updateSlideGroup = async (
+  values: z.infer<typeof createSlideGroupSchema>,
+): Promise<ActionResult> => {
+  const validatedFields = createSlideGroupSchema.safeParse(values)
+  const session = await auth()
+  const user = session?.user
+
+  if (!user || user?.role !== 'admin') {
+    return {
+      isSuccess: false,
+      error: {
+        message: '権限がありません',
+      },
+    }
+  }
+
+  const decoded = jwt.verify(session.accessToken, process.env.AUTH_SECRET!)
+  if (typeof decoded === 'object' && decoded.id !== user.id) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'IDが一致しません',
+      },
+    }
+  }
+
+  if (!validatedFields.success) {
+    return {
+      isSuccess: false,
+      error: {
+        message: validatedFields.error.message,
+      },
+    }
+  }
+
+  await fetch(`${process.env.API_URL}/slides/${values.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session.accessToken}`,
+    },
+    body: JSON.stringify(values),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return {
+          isSuccess: false,
+          error: {
+            message: 'スライドグループの更新に失敗しました',
+          },
+        }
+      }
+      return {
+        isSuccess: true,
+        message: 'スライドグループを更新しました',
+      }
+    })
+    .catch((error) => {
+      return {
+        isSuccess: false,
+        error: {
+          message: error.message,
+        },
+      }
+    })
+
+  revalidatePath('/slides')
+
+  return {
+    isSuccess: true,
+    message: 'スライドグループを更新しました',
   }
 }
 

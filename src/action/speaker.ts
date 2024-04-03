@@ -1,6 +1,7 @@
 'use server'
 
 import jwt from 'jsonwebtoken'
+import { revalidatePath } from 'next/cache'
 import type { z } from 'zod'
 
 import { setSpeakerInfoSchema } from '@/schemas/user'
@@ -156,6 +157,8 @@ export const setSpeakerInfo = async (
       ...updatedUser,
     },
   })
+
+  revalidatePath('/speakers')
 
   return {
     isSuccess: true,

@@ -2,14 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { CalendarIcon, SquareArrowOutUpRight } from 'lucide-react'
+import { CalendarIcon, Loader } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import type * as z from 'zod'
 
-import { createSlideGroup } from '@/action/slide'
+import { getSlideGroups, updateSlideGroup } from '@/action/slide'
 import { FormError } from '@/components/common/form/form-error'
 import TypeLabel from '@/components/common/form/type-label'
 import { Button } from '@/components/ui/button'
@@ -30,11 +30,17 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { createSlideGroupSchema } from '@/schemas/slide'
+import type { SlideGroup } from '@/types/slide'
+import type { User } from '@/types/user'
 
-export default function CreateGroupFrom({
-  slideGroups,
+export default function GroupEditForm({
+  user,
+  slideGroup,
+  setIsOpen,
 }: {
-  slideGroups: string[]
+  user: User
+  slideGroup: SlideGroup
+  setIsOpen: (isOpen: boolean) => void
 }) {
   const [error, setError] = useState<string | undefined>('')
   const router = useRouter()
@@ -43,33 +49,45 @@ export default function CreateGroupFrom({
   const form = useForm<z.infer<typeof createSlideGroupSchema>>({
     resolver: zodResolver(createSlideGroupSchema),
     defaultValues: {
-      id: '',
-      title: '',
-      presentation_at: new Date(),
+      id: slideGroup.id,
+      title: slideGroup.title,
+      presentation_at: new Date(slideGroup.presentation_at),
     },
   })
 
   const onSubmit = (values: z.infer<typeof createSlideGroupSchema>) => {
     setError('')
     startTransition(async () => {
+      if (user.role !== 'admin') {
+        setError('権限がありません')
+        return
+      }
+      const slideGroups = await getSlideGroups()
+      if (!slideGroups.isSuccess) {
+        setError(slideGroups.error.message)
+        return
+      }
+
       const isExist =
-        slideGroups &&
-        slideGroups.some((slideGroup) => slideGroup === values.id)
+        slideGroups.data &&
+        slideGroups.data.some(
+          (sg) => sg === values.id && slideGroup.id !== slideGroup.id,
+        )
 
       if (isExist) {
         setError('すでに存在するグループIDです')
         return
       }
 
-      const result = await createSlideGroup(values)
+      const result = await updateSlideGroup(values)
       if (!result.isSuccess) {
         setError(result.error.message)
         return
       }
 
       form.reset()
-      router.push(`/slides/${values.id}`)
-      toast.success('グループを作成しました')
+      toast.success('グループを更新しました')
+      setIsOpen(false)
     })
   }
 
@@ -85,7 +103,7 @@ export default function CreateGroupFrom({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                グループID <TypeLabel type="必須" />
+                スライドID <TypeLabel type="必須" />
               </FormLabel>
               <FormDescription className="text-xs">
                 半角英数のみ有効です。
@@ -109,7 +127,7 @@ export default function CreateGroupFrom({
                 <TypeLabel type="必須" />
               </FormLabel>
               <FormDescription className="text-xs">
-                スライドグループのタイトルを入力してください。
+                スライドのタイトルを入力してください。
               </FormDescription>
               <FormControl>
                 <Input placeholder="タイトル" {...field} />
@@ -172,7 +190,8 @@ export default function CreateGroupFrom({
           disabled={isPending}
           className="w-full font-bold tracking-wider"
         >
-          作成する
+          {isPending && <Loader className="w-5 h-5 mr-2 animate-spin" />}
+          更新する
         </Button>
       </form>
     </Form>

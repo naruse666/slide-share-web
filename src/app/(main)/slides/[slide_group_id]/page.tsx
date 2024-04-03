@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import { getSlideGroup } from '@/action/slide'
 import CardWrapper from '@/app/_components/card-wrapper'
 import { buttonVariants } from '@/components/ui/button'
+import type { User } from '@/types/user'
 import { convertToJST } from '@/utils/convert-jwt'
 
 import { auth } from '../../../../../auth'
@@ -57,7 +58,9 @@ export default async function SlideGroupPage({
         )}
         {isMember && (
           <div className="flex justify-center items-center gap-3 flex-wrap pt-5">
-            {user?.role === 'admin' && <GroupEdit />}
+            {user?.role === 'admin' && (
+              <GroupEdit user={user as User} slideGroup={slideGroup.data} />
+            )}
             <Link
               className={`${buttonVariants()} flex gap-1.5`}
               href={`/slides/${params.slide_group_id}/upload`}
