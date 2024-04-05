@@ -34,14 +34,11 @@ export default function ActionMenu({ user }: { user: User }) {
           <Copy className="w-4 h-4 mt-0.5" />
           ユーザーID をコピー
         </DropdownMenuItem>
-        <DropdownMenuItem
-          className="flex items-center gap-2"
-          onClick={() => {
-            toast.error('この機能はまだ実装されていません🙇')
-          }}
-        >
-          <UserRoundCog className="w-4 h-4" />
-          ユーザー情報 を編集
+        <DropdownMenuItem>
+          <Link href={`/users/${user.id}`} className="flex items-center gap-2">
+            <UserRoundCog className="w-4 h-4" />
+            ユーザー情報 を編集
+          </Link>
         </DropdownMenuItem>
         <div className="px-1 my-1.5">
           <Separator />

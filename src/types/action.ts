@@ -14,6 +14,10 @@ export type ActionsResult =
       }
     }
 
+export type GetUserActionResult = ActionsResult & {
+  data: User | null
+}
+
 export type GetUsersActionResult = ActionsResult & {
   data: User[]
 }

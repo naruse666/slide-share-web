@@ -23,7 +23,7 @@ export default async function Home() {
             <Info />
           </CardWrapper>
           <CardWrapper title="発表者一覧">
-            <SpeakerList />
+            <SpeakerList isTop={true} />
           </CardWrapper>
           <CardWrapper
             title="新着LT"

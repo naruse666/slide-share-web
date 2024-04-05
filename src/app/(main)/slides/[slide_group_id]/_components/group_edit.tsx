@@ -43,7 +43,7 @@ export default function GroupEdit({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>グループを編集する</AlertDialogTitle>
           <AlertDialogDescription>
             <GroupEditForm
               user={user}

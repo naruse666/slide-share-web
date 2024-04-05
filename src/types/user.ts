@@ -17,4 +17,5 @@ export type User = {
   course?: string
   created_at: Date
   updated_at: Date
+  is_top_display?: boolean
 }

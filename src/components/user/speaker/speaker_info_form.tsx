@@ -54,8 +54,9 @@ export default function SpeakerInfoForm({
       }
 
       const isExist = speakerList.data.some(
-        (speaker) =>
-          speaker.speaker_id === values.speaker_id && speaker.id !== user.id,
+        (s) =>
+          s.speaker_id === values.speaker_id &&
+          s.speaker_id !== user.speaker_id,
       )
       if (isExist) {
         setError('すでに存在する発表者IDです')

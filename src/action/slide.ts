@@ -7,6 +7,7 @@ import type { z } from 'zod'
 
 import {
   createSlideGroupSchema,
+  updateSlideGroupSchema,
   updateSlideSchema,
   uploadPDFRequestSchema,
   uploadPDFSchema,
@@ -213,9 +214,9 @@ export const createSlideGroup = async (
 }
 
 export const updateSlideGroup = async (
-  values: z.infer<typeof createSlideGroupSchema>,
+  values: z.infer<typeof updateSlideGroupSchema>,
 ): Promise<ActionResult> => {
-  const validatedFields = createSlideGroupSchema.safeParse(values)
+  const validatedFields = updateSlideGroupSchema.safeParse(values)
   const session = await auth()
   const user = session?.user
 
