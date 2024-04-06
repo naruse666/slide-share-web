@@ -19,7 +19,7 @@ export async function SpeakerList({ isTop }: { isTop?: boolean }) {
   const skeltonNum = 10
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
       {speakers.data ? (
         <>
           {speakers.data.map((speaker, index) => {

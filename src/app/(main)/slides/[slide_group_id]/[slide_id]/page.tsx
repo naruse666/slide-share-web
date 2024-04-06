@@ -6,9 +6,9 @@ import CardWrapper from '@/app/_components/card-wrapper'
 import SlideConfetti from '@/components/confetti'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { convertToEmbedUrl } from '@/utils/convert-embed-url'
 
 import { auth } from '../../../../../../auth'
+import IframeView from './_components/iframe-view'
 import SlideEdit from './_components/slide_edit'
 
 export default async function SlideDetailPage({
@@ -66,18 +66,10 @@ export default async function SlideDetailPage({
           )}
         </div>
         <div className="grid place-items-center border shadow-md bg-[#212121] dark:bg-[#313131] rounded-md">
-          {slide.data.google_slide_share_url ? (
-            <iframe
-              src={convertToEmbedUrl(slide.data.google_slide_share_url)}
-              className="w-full max-w-[920px] aspect-video"
-              allowFullScreen={true}
-            ></iframe>
-          ) : (
-            <iframe
-              src={slide.data.drive_pdf_url}
-              className="w-full max-w-[920px] aspect-video"
-            ></iframe>
-          )}
+          <IframeView
+            google_slide_share_url={slide.data.google_slide_share_url}
+            drive_pdf_url={slide.data.drive_pdf_url}
+          />
         </div>
         {isAdmin && (
           <div className="flex justify-center items-center mt-5">
