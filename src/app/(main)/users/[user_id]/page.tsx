@@ -17,6 +17,7 @@ export default async function SpeakerDetailPage({
   params: { user_id: string }
 }) {
   const godUser = await getUser(params.user_id)
+  console.log(godUser)
 
   if (!godUser.isSuccess || !godUser.data) {
     redirect('/404')

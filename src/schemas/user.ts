@@ -11,6 +11,7 @@ export const setSpeakerInfoSchema = z.object({
     }),
   school: z.string().optional(),
   course: z.string().optional(),
+  created_at: z.date().optional(),
 })
 
 export const updateUserSchema = z.object({
@@ -31,4 +32,5 @@ export const updateUserSchema = z.object({
   school: z.string().optional(),
   course: z.string().optional(),
   is_top_display: z.boolean().optional(),
+  created_at: z.date().optional(),
 })

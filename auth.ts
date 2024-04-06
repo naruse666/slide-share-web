@@ -46,6 +46,9 @@ export const {
         school: user.school,
         course: user.course,
         emailVerified: user.created_at,
+        is_top_display: user.is_top_display,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
       }
       session.accessToken = accessToken
 

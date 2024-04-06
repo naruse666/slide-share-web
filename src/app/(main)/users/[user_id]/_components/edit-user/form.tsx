@@ -53,11 +53,13 @@ export default function EditUserForm({ user }: { user: User }) {
       school: user?.school,
       course: user?.course,
       is_top_display: user?.is_top_display,
+      created_at: user?.created_at,
     },
   })
 
   const onSubmit = (values: z.infer<typeof updateUserSchema>) => {
     setError('')
+    console.log('values', values)
     startTransition(async () => {
       const speakerList = await getSpeakerList()
       if (!speakerList.isSuccess) {
@@ -285,13 +287,6 @@ export default function EditUserForm({ user }: { user: User }) {
         >
           変更する
         </Button>
-        <Link
-          href="/users"
-          className="flex items-center justify-center gap-1.5 text-sm group text-foreground mr-4"
-        >
-          <ArrowLeft className="w-4 h-4 transition duration-300 group-hover:-translate-x-1" />
-          やめる
-        </Link>
       </form>
     </Form>
   )
