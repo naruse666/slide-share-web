@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Loader } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
@@ -53,13 +53,11 @@ export default function EditUserForm({ user }: { user: User }) {
       school: user?.school,
       course: user?.course,
       is_top_display: user?.is_top_display,
-      created_at: user?.created_at,
     },
   })
 
   const onSubmit = (values: z.infer<typeof updateUserSchema>) => {
     setError('')
-    console.log('values', values)
     startTransition(async () => {
       const speakerList = await getSpeakerList()
       if (!speakerList.isSuccess) {
@@ -76,6 +74,8 @@ export default function EditUserForm({ user }: { user: User }) {
         setError('すでに存在する発表者IDです')
         return
       }
+
+      values.created_at = new Date(user.created_at)
 
       const result = await updateUser(values)
       if (!result.isSuccess) {
@@ -285,7 +285,8 @@ export default function EditUserForm({ user }: { user: User }) {
           disabled={isPending}
           className="w-full font-bold tracking-wider"
         >
-          変更する
+          {isPending && <Loader className="w-5 h-5 mr-2 animate-spin" />}
+          更新する
         </Button>
       </form>
     </Form>

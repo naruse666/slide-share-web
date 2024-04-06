@@ -41,7 +41,6 @@ export default function SpeakerInfoForm({
       speaker_id: user?.speaker_id,
       school: user?.school,
       course: user?.course,
-      created_at: user?.created_at,
     },
   })
 
