@@ -22,7 +22,13 @@ export default async function Home() {
           >
             <Info />
           </CardWrapper>
-          <CardWrapper title="発表者一覧">
+          <CardWrapper
+            title="発表者一覧"
+            link={{
+              href: '/speakers',
+              text: 'すべての発表者を見る',
+            }}
+          >
             <SpeakerList isTop={true} />
           </CardWrapper>
           <CardWrapper
