@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Inter, Noto_Sans_JP } from 'next/font/google'
 import { Toaster } from 'sonner'
@@ -52,6 +53,7 @@ export default async function RootLayout({
           <FirstSpeakerInfoDialog user={user as User} />
           <main>{children}</main>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
