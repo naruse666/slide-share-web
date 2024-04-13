@@ -1,4 +1,5 @@
 import { ArrowLeft } from 'lucide-react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import SignOutButton from '@/components/common/nav/sign-out-button'
@@ -6,6 +7,10 @@ import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 import { auth } from '../../../auth'
 import ButtonWrapper from './_components/button-wrapper'
+
+export const metadata: Metadata = {
+  title: 'ログイン',
+}
 
 export default async function AuthPage() {
   const session = await auth()
