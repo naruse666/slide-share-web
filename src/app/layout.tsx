@@ -38,6 +38,12 @@ export default async function RootLayout({
 
   return (
     <html lang="ja" suppressHydrationWarning>
+      <head>
+        <meta
+          name="google-site-verification"
+          content="tekceQnk9GVG9WFI2dk8Q7tMaQZTQXcDN7vkjdtLw0c"
+        />
+      </head>
       <body
         className={cn(notoSansJP.className, inter.className, 'overflow-hidden')}
       >
