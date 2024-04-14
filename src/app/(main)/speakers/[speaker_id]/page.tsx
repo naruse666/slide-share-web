@@ -22,6 +22,8 @@ export default async function SpeakerDetailPage({
     redirect('/404')
   }
 
+  speaker.data.slide_list && speaker.data.slide_list.reverse()
+
   return (
     <article className="pb-24 pr-1">
       <CardWrapper
