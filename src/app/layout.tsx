@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   description:
     'TECH.C. LTサークルのWebサイトです。毎週開催しているLTの情報を掲載しています。',
-  keywords: ['TECH.C.', 'LT', 'サークル', '技術', '技術共有', '技術交流'],
+  keywords: ['TECH.C.', 'LT', 'サークル', 'LTサークル', '技術共有', '技術交流'],
 }
 
 export default async function RootLayout({
