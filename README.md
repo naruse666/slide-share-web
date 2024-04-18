@@ -17,6 +17,11 @@ bun i
 bun dev
 ```
 
+## Contributing
+バグ報告や機能提案は[Issue Forms](https://github.com/TECH-C-LT/slide-share-web/issues/new/choose)から行ってください。
+
+バグの報告や機能提案のガイドライン、開発者ドキュメントは[CONTRIBUTING.md](./CONTRIBUTING.md)を参照してください。
+
 ## Usage Technology
 
 - [Next.js](https://nextjs.org/)
