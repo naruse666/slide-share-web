@@ -176,7 +176,7 @@ export default function GoogleSlidesURLFrom({
                 <a
                   target="_blank"
                   className="text-primary inline-flex items-center gap-1 hover:underline"
-                  href="https://ryu1013-share.notion.site/Google-Slides-URL-b32eadc893194d298336e3e20cf1552e?pvs=4"
+                  href="https://ryu1013-share.notion.site/Google-Slides-URL-b32eadc893194d298336e3e20cf1552e?pvs=4git "
                 >
                   公開URL の取得方法
                   <SquareArrowOutUpRight className="w-3 h-3" />
