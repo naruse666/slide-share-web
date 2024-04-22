@@ -144,7 +144,7 @@ export default function GoogleSlidesURLFrom({
                 <a
                   target="_blank"
                   className="text-primary inline-flex items-center gap-1 hover:underline"
-                  href="https://chlorinated-skateboard-53e.notion.site/Google-Slides-URL-8055286246164b2585be382e93eb3c9d?pvs=4"
+                  href="https://ryu1013-share.notion.site/Google-Slides-URL-e9b4ae71350d4aa085d7c1df030bd565?pvs=4"
                 >
                   URL の取得方法
                   <SquareArrowOutUpRight className="w-3 h-3" />
@@ -176,7 +176,7 @@ export default function GoogleSlidesURLFrom({
                 <a
                   target="_blank"
                   className="text-primary inline-flex items-center gap-1 hover:underline"
-                  href="https://chlorinated-skateboard-53e.notion.site/Google-Slides-URL-24f7fa2a0bde47ff97d38bca305112b0?pvs=4"
+                  href="https://ryu1013-share.notion.site/Google-Slides-URL-b32eadc893194d298336e3e20cf1552e?pvs=4"
                 >
                   公開URL の取得方法
                   <SquareArrowOutUpRight className="w-3 h-3" />
