@@ -23,6 +23,7 @@ bun dev
 バグの報告や機能提案のガイドライン、開発者ドキュメントは[CONTRIBUTING.md](./CONTRIBUTING.md)を参照してください。
 
 ## Usage Technology
+We're using: https://github.com/SAWARATSUKI/ServiceLogos
 
 | Logo | Link |
 | --- | --- |
