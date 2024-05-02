@@ -1,0 +1,15 @@
+services:
+  web:
+    container_name: slide-share-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: 
+    - .env.local
+    ports:
+      - 3000:3000
+    deploy:
+     resources:
+      limits:
+        cpus: '0.5m'
+        memory: 512MiB
