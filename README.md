@@ -26,11 +26,11 @@ bun dev
 
 | Logo | Link |
 | --- | --- |
-| <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/Next.js/Next.js.png" title="Next.js" alt="Next.js" width="100" height="80"> | [Next.js](https://nextjs.org/) |
-| <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/TypeScript/TypeScript.png" title="TypeScript" alt="TypeScript" width="100" height="80"> | [TypeScript](https://nextjs.org/) |
-| <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/Tailwindcss/Tailwindcss6.png" title="Tailwindcss" alt="Tailwindcss" width="100" height="80"> | [Tailwind CSS](https://tailwindcss.com/) |
+| <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/Next.js/Next.js.png" title="Next.js" alt="Next.js" width="120" height="80"> | [Next.js](https://nextjs.org/) |
+| <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/TypeScript/TypeScript.png" title="TypeScript" alt="TypeScript" width="120" height="80"> | [TypeScript](https://nextjs.org/) |
+| <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main/Tailwindcss/Tailwindcss6.png" title="Tailwindcss" alt="Tailwindcss" width="120" height="80"> | [Tailwind CSS](https://tailwindcss.com/) |
 
-# <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main//.png" title="" alt="" width="100" height="80"> 
+<!-- sawaratsuki template: <img src="https://github.com/SAWARATSUKI/ServiceLogos/blob/main//.png" title="" alt="" width="120" height="80"> -->
 
 - [Auth.js](https://authjs.dev/)
 - [shadcn/ui](https://ui.shadcn.com/)
